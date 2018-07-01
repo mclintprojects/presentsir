@@ -14,40 +14,46 @@
 
 		<el-dialog title="Login" :visible.sync="showLoginDialog">
 			<div class="auth-dialog">
-        <label>Username</label>
-        <el-input class="input" placeholder="Username" />
+				<label>Username</label>
+				<el-input class="input" placeholder="Username" />
 
-        <label>Password</label>
-        <el-input class="input" placeholder="Password" type="password" />
+				<label>Password</label>
+				<el-input class="input" placeholder="Password" type="password" />
 
-        <div>
-            <el-radio v-model="user" label="teacher">Teacher</el-radio>
-            <el-radio v-model="user" label="student">Student</el-radio>
-        </div>
+				<div>
+					<el-radio v-model="user" label="teacher">Teacher</el-radio>
+					<el-radio v-model="user" label="student">Student</el-radio>
+				</div>
 
-        <el-row type="flex" justify="end" style="margin-top: 16px;">
-            <el-button type="success" round>Login</el-button>
-        </el-row>
-    	</div>
+				<el-row type="flex" justify="end" style="margin-top: 16px;">
+					<el-button type="success" round>Login</el-button>
+				</el-row>
+			</div>
 		</el-dialog>
 
 		<el-dialog title="Signup" :visible.sync="showSignupDialog">
 			<div class="auth-dialog">
-        <label>Email address</label>
-        <el-input class="input" placeholder="Email address" type="email"/>
+				<label>First name</label>
+				<el-input class="input" placeholder="First name" />
 
-        <label>Password</label>
-        <el-input class="input" placeholder="Password" type="password" />
+				<label>Last name</label>
+				<el-input class="input" placeholder="Last name" />
 
-        <div>
-            <el-radio v-model="user" label="teacher">Teacher</el-radio>
-            <el-radio v-model="user" label="student">Student</el-radio>
-        </div>
+				<label>Email address</label>
+				<el-input class="input" placeholder="Email address" type="email"/>
 
-        <el-row type="flex" justify="end" style="margin-top: 16px;">
-            <el-button type="success" round>Signup</el-button>
-        </el-row>
-    	</div>
+				<label>Password</label>
+				<el-input class="input" placeholder="Password" type="password" />
+
+				<div>
+					<el-radio v-model="user" label="teacher">Teacher</el-radio>
+					<el-radio v-model="user" label="student">Student</el-radio>
+				</div>
+
+				<el-row type="flex" justify="end" style="margin-top: 16px;">
+					<el-button type="success" round>Signup</el-button>
+				</el-row>
+			</div>
 		</el-dialog>
   </div>
 </template>
