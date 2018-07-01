@@ -12,53 +12,53 @@
       <el-button type="info" round @click="showSignupDialog = true">Signup</el-button>
     </el-row>
 
-		<el-dialog title="Login" :visible.sync="showLoginDialog">
-			<div class="auth-dialog">
-				<label>Email address</label>
-				<el-input v-model="loginData.email" class="input" placeholder="Email address" />
+	<el-dialog title="Login" :visible.sync="showLoginDialog">
+		<div class="auth-dialog">
+			<label>Email address</label>
+			<el-input v-model="loginData.email" class="input" placeholder="Email address" />
 
-				<label>Password</label>
-				<el-input @keyup.enter="loginUser" v-model="loginData.password" class="input" placeholder="Password" type="password" />
+			<label>Password</label>
+			<el-input @keyup.enter="loginUser" v-model="loginData.password" class="input" placeholder="Password" type="password" />
 
-				<div>
-					<el-radio v-model="loginData.user_type" label="teacher">Teacher</el-radio>
-					<el-radio v-model="loginData.user_type" label="student">Student</el-radio>
-				</div>
-
-				<el-row type="flex" justify="end" style="margin-top: 16px;">
-					<el-button type="success" round @click="loginUser" :disabled="isLoggingIn" :loading="isLoggingIn">Login</el-button>
-				</el-row>
-
-				<error-bag :errors="loginErrors" />
+			<div>
+				<el-radio v-model="loginData.user_type" label="teacher">Teacher</el-radio>
+				<el-radio v-model="loginData.user_type" label="student">Student</el-radio>
 			</div>
-		</el-dialog>
 
-		<el-dialog title="Signup" :visible.sync="showSignupDialog">
-			<div class="auth-dialog">
-				<label>First name</label>
-				<el-input v-model="signupData.first_name" class="input" placeholder="First name" />
+			<el-row type="flex" justify="end" style="margin-top: 16px;">
+				<el-button type="success" round @click="loginUser" :disabled="isLoggingIn" :loading="isLoggingIn">Login</el-button>
+			</el-row>
 
-				<label>Last name</label>
-				<el-input v-model="signupData.last_name" class="input" placeholder="Last name" />
+			<error-bag :errors="loginErrors" />
+		</div>
+	</el-dialog>
 
-				<label>Email address</label>
-				<el-input v-model="signupData.email" class="input" placeholder="Email address" type="email"/>
+	<el-dialog title="Signup" :visible.sync="showSignupDialog">
+		<div class="auth-dialog">
+			<label>First name</label>
+			<el-input v-model="signupData.first_name" class="input" placeholder="First name" />
 
-				<label>Password</label>
-				<el-input @keyup.enter="loginUser" v-model="signupData.password" class="input" placeholder="Password" type="password" />
+			<label>Last name</label>
+			<el-input v-model="signupData.last_name" class="input" placeholder="Last name" />
 
-				<div>
-					<el-radio v-model="signupData.user_type" label="teacher">Teacher</el-radio>
-					<el-radio v-model="signupData.user_type" label="student">Student</el-radio>
-				</div>
+			<label>Email address</label>
+			<el-input v-model="signupData.email" class="input" placeholder="Email address" type="email"/>
 
-				<el-row type="flex" justify="end" style="margin-top: 16px;">
-					<el-button type="success" round @click="signupUser" :disabled="isSigningUp" :loading="isSigningUp">Signup</el-button>
-				</el-row>
+			<label>Password</label>
+			<el-input @keyup.enter="loginUser" v-model="signupData.password" class="input" placeholder="Password" type="password" />
 
-				<error-bag :errors="signupErrors" />
+			<div>
+				<el-radio v-model="signupData.user_type" label="teacher">Teacher</el-radio>
+				<el-radio v-model="signupData.user_type" label="student">Student</el-radio>
 			</div>
-		</el-dialog>
+
+			<el-row type="flex" justify="end" style="margin-top: 16px;">
+				<el-button type="success" round @click="signupUser" :disabled="isSigningUp" :loading="isSigningUp">Signup</el-button>
+			</el-row>
+
+			<error-bag :errors="signupErrors" />
+		</div>
+	</el-dialog>
   </div>
 </template>
 
@@ -170,22 +170,5 @@ export default {
 
 #auth-buttons-container {
 	margin-top: 40px;
-}
-
-.auth-dialog {
-	.input {
-		margin-bottom: 16px;
-		margin-top: 4px;
-	}
-}
-
-.el-dialog {
-	width: 30% !important;
-}
-
-@media screen and (max-width: 567px) {
-	.el-dialog {
-		width: 90% !important;
-	}
 }
 </style>

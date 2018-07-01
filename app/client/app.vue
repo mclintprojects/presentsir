@@ -55,6 +55,11 @@ body {
 	display: none;
 }
 
+.input {
+	margin-bottom: 16px;
+	margin-top: 4px;
+}
+
 .error-container {
 	background-color: rgb(228, 63, 77);
 	color: var(--primary-text-color-light);
@@ -75,9 +80,17 @@ body {
 	}
 }
 
+.el-dialog {
+	width: 30% !important;
+}
+
 @media screen and (max-width: 567px) {
 	.container {
 		width: 95%;
+	}
+
+	.el-dialog {
+		width: 90% !important;
 	}
 }
 </style>
