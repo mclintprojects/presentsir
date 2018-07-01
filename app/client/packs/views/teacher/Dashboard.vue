@@ -29,12 +29,6 @@ export default {
 $primary-text-color: rgba(0, 0, 0, 0.8);
 $primary-text-color-light: rgba(0, 0, 0, 0.54);
 
-.app-container {
-	width: 80%;
-	margin: auto;
-	color: $primary-text-color;
-}
-
 .dashboard-greeting {
 	font-size: 22px;
 }
