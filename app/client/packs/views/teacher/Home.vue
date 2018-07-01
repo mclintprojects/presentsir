@@ -1,11 +1,11 @@
 <template>
     <div>
         <navbar>
-            <div class="main-menu-item" :class="{highlight: shouldHighlight('teacher-dashboard')}">
+            <div @click="navigateTo('teacher-dashboard')" class="main-menu-item" :class="{highlight: shouldHighlight('teacher-dashboard')}">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530444774/present-sir/twotone-dashboard-24px.svg" />
                 <p>Dashboard</p>
             </div>
-            <div class="main-menu-item">
+            <div @click="navigateTo('teacher-classes')" class="main-menu-item" :class="{highlight: shouldHighlight('teacher-classes')}">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" />
                 <p>Classes</p>
             </div>
@@ -33,7 +33,7 @@
 <script>
 import Navbar from '../../components/Navbar';
 
-const TOP_LEVEL_ROUTES = ['teacher-dashboard'];
+const TOP_LEVEL_ROUTES = ['teacher-dashboard', 'teacher-classes'];
 export default {
 	components: { Navbar },
 	data() {
@@ -50,16 +50,24 @@ export default {
 		logoutUser() {
 			this.$store.dispatch('logout');
 			this.$router.push('/');
+		},
+		navigateTo(name) {
+			this.$router.push({ name });
+			this.selectedComponent = name;
+		},
+		highlight(to) {
+			TOP_LEVEL_ROUTES.forEach(route => {
+				if (to.name == route) this.selectedComponent = route;
+			});
 		}
 	},
 	watch: {
 		$route(to, from) {
-			TOP_LEVEL_ROUTES.forEach(route => {
-				if (to.path.includes(route)) this.selectedComponent = route;
-			});
+			this.highlight(to);
 		}
 	},
 	created() {
+		this.highlight(this.$route);
 		if (this.$route.path === '/teacher')
 			this.$router.push({ name: 'teacher-dashboard' });
 		this.$store.dispatch('setUser');
@@ -68,7 +76,15 @@ export default {
 </script>
 
 <style lang="scss">
-.dashboard-container {
+.app-container {
 	padding: 16px;
+	margin: auto;
+	width: 50%;
+}
+
+@media screen and (max-width: 567px) {
+	.app-container {
+		width: calc(100% - 32px);
+	}
 }
 </style>

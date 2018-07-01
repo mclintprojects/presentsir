@@ -94,7 +94,7 @@ export default {
 	}
 
 	.main-menu-item {
-		width: 100%;
+		width: calc(100% - 32px);
 		justify-content: flex-start;
 
 		img {

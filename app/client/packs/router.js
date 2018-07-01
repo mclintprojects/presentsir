@@ -3,8 +3,10 @@ import axios from 'axios';
 import Router from 'vue-router';
 import Auth from './views/Auth.vue';
 import StudentHome from './views/student/Home';
+
 import TeacherHome from './views/teacher/Home';
 import TeacherDashboard from './views/teacher/Dashboard';
+import TeacherClasses from './views/teacher/Classes';
 
 Vue.use(Router);
 
@@ -30,6 +32,11 @@ const router = new Router({
 					path: 'dashboard',
 					name: 'teacher-dashboard',
 					component: TeacherDashboard
+				},
+				{
+					path: 'classes',
+					name: 'teacher-classes',
+					component: TeacherClasses
 				}
 			]
 		}
@@ -41,7 +48,6 @@ const excludedPaths = ['/'];
 router.beforeEach(async (to, from, next) => {
 	if (!excludedPaths.includes(to.path)) {
 		const response = await axios.get('/auth/get_session');
-		console.log({ user: response.data.user });
 		response.data.user ? next() : next('/');
 	} else next();
 });

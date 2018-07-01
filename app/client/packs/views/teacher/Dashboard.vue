@@ -1,5 +1,5 @@
 <template>
-    <div class="dashboard-container">
+    <div class="app-container">
         <p class="dashboard-greeting">Hello, {{user.first_name}}!</p>
         <p class="dashboard-date">{{date}}</p>
     </div>
@@ -29,7 +29,7 @@ export default {
 $primary-text-color: rgba(0, 0, 0, 0.8);
 $primary-text-color-light: rgba(0, 0, 0, 0.54);
 
-.dashboard-container {
+.app-container {
 	width: 80%;
 	margin: auto;
 	color: $primary-text-color;

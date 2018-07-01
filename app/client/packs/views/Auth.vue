@@ -118,7 +118,6 @@ export default {
 				this.isLoggingIn = true;
 				this.loginErrors = [];
 				const response = await axios.post('/users/login', this.loginData);
-				console.log(response.status);
 				if (response.status === 200) {
 					const whereTo =
 						this.loginData.user_type === 'teacher'
