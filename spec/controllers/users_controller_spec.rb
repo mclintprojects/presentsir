@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'json'
 
 RSpec.describe UsersController, type: :controller do
     describe '#POST users/signup' do
@@ -17,6 +18,24 @@ RSpec.describe UsersController, type: :controller do
             expect(User.all.count).to eq(before_count + 1)
             expect(User.last.first_name).to eq(user_params[:first_name])
             expect(response).to have_http_status(201)
+        end
+    end
+
+    describe '#POST users/login' do
+        it 'should create a new user' do
+            user_params = {
+                first_name: Forgery('name').first_name,
+                last_name: Forgery('name').last_name,
+                email: Forgery('internet').email_address,
+                password: Forgery('basic').password,
+                user_type: 'teacher'
+            };
+
+            User.create(user_params);
+
+            post :login, params: {user: user_params}
+            expect(JSON.parse(response.body)['first_name']).to eq(user_params[:first_name])
+            expect(response).to have_http_status(200)
         end
     end
 end

@@ -46,7 +46,7 @@
 }
 
 .error-container {
-	background-color: tomato;
+	background-color: rgb(228, 63, 77);
 	color: var(--primary-text-color-light);
 	border-radius: 10px;
 	padding: 16px;

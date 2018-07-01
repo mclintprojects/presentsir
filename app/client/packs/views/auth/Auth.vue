@@ -28,6 +28,8 @@
 				<el-row type="flex" justify="end" style="margin-top: 16px;">
 					<el-button type="success" round>Login</el-button>
 				</el-row>
+
+				<error-bag :errors="loginErrors" />
 			</div>
 		</el-dialog>
 
