@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Auth from './views/Auth.vue';
 import StudentHome from './views/student/Home';
 import TeacherHome from './views/teacher/Home';
+import TeacherDashboard from './views/teacher/Dashboard';
 
 Vue.use(Router);
 
@@ -16,12 +17,20 @@ export default new Router({
 		{
 			path: '/student',
 			name: 'student-home',
-			component: StudentHome
+			component: StudentHome,
+			children: []
 		},
 		{
 			path: '/teacher',
 			name: 'teacher-home',
-			component: TeacherHome
+			component: TeacherHome,
+			children: [
+				{
+					path: 'dashboard',
+					name: 'teacher-dashboard',
+					component: TeacherDashboard
+				}
+			]
 		}
 	],
 	mode: 'history'

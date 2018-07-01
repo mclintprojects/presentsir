@@ -26,6 +26,9 @@
 .container {
 	width: 30%;
 	margin: auto;
+}
+
+.container-full {
 	min-height: 100vh;
 }
 
@@ -43,6 +46,10 @@
 
 .center-horizontal {
 	justify-content: center;
+}
+
+.hidden {
+	display: none;
 }
 
 .error-container {
