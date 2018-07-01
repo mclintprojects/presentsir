@@ -17,7 +17,7 @@
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445995/present-sir/twotone-settings-24px.svg" />
                 <p>Settings</p>
             </div>
-            <div class="main-menu-item">
+            <div class="main-menu-item" @click="logoutUser">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530450965/present-sir/twotone-exit_to_app-24px.svg" />
                 <p>Logout</p>
             </div>
@@ -46,6 +46,10 @@ export default {
 	methods: {
 		shouldHighlight(name) {
 			return name === this.selectedComponent;
+		},
+		logoutUser() {
+			this.$store.dispatch('logout');
+			this.$router.push('/');
 		}
 	},
 	watch: {

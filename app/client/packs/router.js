@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import axios from 'axios';
 import Router from 'vue-router';
 import Auth from './views/Auth.vue';
 import StudentHome from './views/student/Home';
@@ -7,7 +8,7 @@ import TeacherDashboard from './views/teacher/Dashboard';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
 	routes: [
 		{
 			path: '/',
@@ -35,3 +36,14 @@ export default new Router({
 	],
 	mode: 'history'
 });
+
+const excludedPaths = ['/'];
+router.beforeEach(async (to, from, next) => {
+	if (!excludedPaths.includes(to.path)) {
+		const response = await axios.get('/auth/get_session');
+		console.log({ user: response.data.user });
+		response.data.user ? next() : next('/');
+	} else next();
+});
+
+export default router;

@@ -9,13 +9,18 @@ const getters = {
 };
 
 const mutations = {
-	setUser: (state, user) => (state.user = user)
+	setUser: (state, user) => (state.user = user),
+	logout: state => (state.user = {})
 };
 
 const actions = {
 	setUser: async ({ commit }) => {
 		const response = await axios.get('/auth/get_session');
 		commit('setUser', response.data.user);
+	},
+	logout: async ({ commit }) => {
+		const response = await axios.post('/auth/logout');
+		commit('logout');
 	}
 };
 

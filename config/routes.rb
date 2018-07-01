@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post 'users/login'
 
   get 'auth/get_session'
+  post 'auth/logout'
 
   match "*path", to: "home#index", format: false, via: :get
 end

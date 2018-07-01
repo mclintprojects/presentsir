@@ -41,6 +41,7 @@ $primary-text-color-light: rgba(0, 0, 0, 0.54);
 
 .dashboard-date {
 	color: $primary-text-color-light;
-	font-size: 12px;
+	text-transform: uppercase;
+	font-size: 10px;
 }
 </style>
