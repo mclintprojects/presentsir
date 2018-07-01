@@ -1,13 +1,13 @@
 class CourseController < ApplicationController
   def all
-    render json: Course.all, each_serializer: CourseSerializer, status: 200
+    render json: Course.where(teacher_id: session[:teacher_id]), each_serializer: CourseSerializer, status: 200
   end
 
   def new
-    teacher = Teacher.find_by(user_id: session[:user]["id"])
+    teacher_id = session[:teacher_id]
     course = Course.new(course_params)
-    course.teacher_id = teacher.id
-    course.identifier = "CRS-#{session[:user]["last_name"].upcase}-#{Course.where(teacher_id: teacher.id).count + 1}"
+    course.teacher_id = teacher_id
+    course.identifier = "CRS-#{session[:user]["last_name"].upcase}-#{Course.where(teacher_id: teacher_id).count + 1}"
 
     if(course.save)
       render json: course, serializer: CourseSerializer, status: 201

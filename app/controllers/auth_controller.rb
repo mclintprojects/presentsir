@@ -2,7 +2,6 @@ class AuthController < ApplicationController
     def get_session
         user = session[:user]
         if user.present?
-            binding.pry
             user.delete("password")
             user.delete("password_digest")
         end

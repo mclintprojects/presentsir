@@ -6,7 +6,7 @@ import StudentHome from './views/student/Home';
 
 import TeacherHome from './views/teacher/Home';
 import TeacherDashboard from './views/teacher/Dashboard';
-import TeacherClasses from './views/teacher/Classes';
+import TeacherCourses from './views/teacher/Courses';
 
 Vue.use(Router);
 
@@ -34,9 +34,9 @@ const router = new Router({
 					component: TeacherDashboard
 				},
 				{
-					path: 'classes',
-					name: 'teacher-classes',
-					component: TeacherClasses
+					path: 'courses',
+					name: 'teacher-courses',
+					component: TeacherCourses
 				}
 			]
 		}

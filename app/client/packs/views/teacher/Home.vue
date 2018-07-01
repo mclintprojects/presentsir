@@ -5,9 +5,9 @@
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530444774/present-sir/twotone-dashboard-24px.svg" />
                 <p>Dashboard</p>
             </div>
-            <div @click="navigateTo('teacher-classes')" class="main-menu-item" :class="{highlight: shouldHighlight('teacher-classes')}">
+            <div @click="navigateTo('teacher-courses')" class="main-menu-item" :class="{highlight: shouldHighlight('teacher-courses')}">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" />
-                <p>Classes</p>
+                <p>Courses</p>
             </div>
             <div class="main-menu-item">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445880/present-sir/twotone-school-24px.svg" />
@@ -33,7 +33,7 @@
 <script>
 import Navbar from '../../components/Navbar';
 
-const TOP_LEVEL_ROUTES = ['teacher-dashboard', 'teacher-classes'];
+const TOP_LEVEL_ROUTES = ['teacher-dashboard', 'teacher-courses'];
 export default {
 	components: { Navbar },
 	data() {
