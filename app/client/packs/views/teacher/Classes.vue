@@ -47,11 +47,15 @@ export default {
 	methods: {
 		async addClass() {
 			try {
+				this.errors = [];
 				this.isAddingClass = true;
-				const response = await axios.post('/course/new', this.formData);
+				const response = await axios.post('/course/new', {
+					course: this.formData
+				});
 				this.isAddingClass = false;
 			} catch (err) {
 				this.isAddingClass = false;
+				this.errors = err.response.data.errors;
 			}
 		}
 	}

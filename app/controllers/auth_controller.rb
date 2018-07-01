@@ -2,8 +2,9 @@ class AuthController < ApplicationController
     def get_session
         user = session[:user]
         if user.present?
-            user.delete(:password)
-            user.delete(:password_digest)
+            binding.pry
+            user.delete("password")
+            user.delete("password_digest")
         end
         render json: {user: user}
     end

@@ -4,5 +4,6 @@ FactoryBot.define do
     last_name Forgery('name').last_name
     email Forgery('internet').email_address
     password 'password'
+    user_type 'teacher'
   end
 end

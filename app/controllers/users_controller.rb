@@ -5,6 +5,7 @@ class UsersController < ApplicationController
             Teacher.create(user_id: user.id) if user.user_type == 'teacher'
             Student.create(user_id: user.id) if user.user_type == 'student'
 
+            user = User.find(user.id)
             session[:user] = user
             render json: user, serializer: UsersSerializer, status: 201
         else
