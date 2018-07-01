@@ -7,8 +7,8 @@
 <style lang="scss">
 :root {
 	--background-color: #f5f8fa;
-	--primary-color: #ffffff;
-	--accent-color: #58d3d3;
+	--primary-color: #323a4b;
+	--accent-color: #fe0040;
 	--primary-text-color: rgba(0, 0, 0, 0.8);
 	--primary-text-color-light: rgba(0, 0, 0, 0.54);
 }
