@@ -45,6 +45,26 @@
 	justify-content: center;
 }
 
+.error-container {
+	background-color: tomato;
+	color: var(--primary-text-color-light);
+	border-radius: 10px;
+	padding: 16px;
+	margin-top: 16px;
+
+	.error-title {
+		font-weight: bold;
+	}
+
+	ol {
+		margin-left: 12px;
+	}
+
+	li {
+		font-size: 12px;
+	}
+}
+
 @media screen and (max-width: 567px) {
 	.container {
 		width: 95%;

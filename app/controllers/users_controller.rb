@@ -2,7 +2,7 @@ class UsersController < ApplicationController
     def signup
         user = User.new(signup_params)
         if(user.save)
-            session[:user_id] = user.id
+            session[:user] = user
             render json: user, serializer: UsersSerializer, status: 201
         else
             render json: {errors: user.errors.full_messages}, status: 422

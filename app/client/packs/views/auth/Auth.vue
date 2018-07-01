@@ -21,8 +21,8 @@
 				<el-input class="input" placeholder="Password" type="password" />
 
 				<div>
-					<el-radio v-model="user" label="teacher">Teacher</el-radio>
-					<el-radio v-model="user" label="student">Student</el-radio>
+					<el-radio v-model="loginData.user_type" label="teacher">Teacher</el-radio>
+					<el-radio v-model="loginData.user_type" label="student">Student</el-radio>
 				</div>
 
 				<el-row type="flex" justify="end" style="margin-top: 16px;">
@@ -34,42 +34,75 @@
 		<el-dialog title="Signup" :visible.sync="showSignupDialog">
 			<div class="auth-dialog">
 				<label>First name</label>
-				<el-input class="input" placeholder="First name" />
+				<el-input v-model="signupData.first_name" class="input" placeholder="First name" />
 
 				<label>Last name</label>
-				<el-input class="input" placeholder="Last name" />
+				<el-input v-model="signupData.last_name" class="input" placeholder="Last name" />
 
 				<label>Email address</label>
-				<el-input class="input" placeholder="Email address" type="email"/>
+				<el-input v-model="signupData.email" class="input" placeholder="Email address" type="email"/>
 
 				<label>Password</label>
-				<el-input class="input" placeholder="Password" type="password" />
+				<el-input v-model="signupData.password" class="input" placeholder="Password" type="password" />
 
 				<div>
-					<el-radio v-model="user" label="teacher">Teacher</el-radio>
-					<el-radio v-model="user" label="student">Student</el-radio>
+					<el-radio v-model="signupData.user_type" label="teacher">Teacher</el-radio>
+					<el-radio v-model="signupData.user_type" label="student">Student</el-radio>
 				</div>
 
 				<el-row type="flex" justify="end" style="margin-top: 16px;">
-					<el-button type="success" round>Signup</el-button>
+					<el-button type="success" round @click="signupUser" :disabled="isSigningUp" :loading="isSigningUp">Signup</el-button>
 				</el-row>
+
+				<error-bag :errors="signupErrors" />
 			</div>
 		</el-dialog>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import ErrorBag from '../../components/ErrorBag';
+
 export default {
+	components: { ErrorBag },
 	data() {
 		return {
 			showLoginDialog: false,
 			showSignupDialog: false,
-			user: 'teacher'
+			isSigningUp: false,
+			signupData: {
+				first_name: '',
+				last_name: '',
+				user_type: 'teacher',
+				email: '',
+				password: ''
+			},
+			loginData: {
+				email: '',
+				password: '',
+				user_type: 'teacher'
+			},
+			signupErrors: [],
+			loginErrors: []
 		};
 	},
 	methods: {
 		navigateToSignUp() {
 			this.$router.push({ name: 'signup' });
+		},
+		async signupUser() {
+			try {
+				this.isSigningUp = true;
+				const response = await axios.post('/users/signup', this.signupData);
+				if (response.status === 201) {
+					this.$router.push({ name: 'student-home' });
+					this.isSigningUp = false;
+				}
+			} catch (err) {
+				this.signupErrors = err.response.data.errors;
+				this.isSigningUp = false;
+			}
 		}
 	}
 };
