@@ -1,7 +1,7 @@
 <template>
     <div>
         <navbar>
-            <div class="main-menu-item">
+            <div class="main-menu-item" :class="{highlight: shouldHighlight('teacher-dashboard')}">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530444774/present-sir/twotone-dashboard-24px.svg" />
                 <p>Dashboard</p>
             </div>
@@ -22,23 +22,39 @@
                 <p>Logout</p>
             </div>
         </navbar>
-        <div class="container">
-            <h1>Hello, !</h1>
+        <div>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
         </div>
     </div>
 </template>
 
 <script>
 import Navbar from '../../components/Navbar';
+
+const TOP_LEVEL_ROUTES = ['teacher-dashboard'];
 export default {
 	components: { Navbar },
 	data() {
 		return {
-			collapsed: true
+			collapsed: true,
+			selectedComponent: 'teacher-dashboard'
 		};
 	},
 	computed: {},
-	methods: {},
+	methods: {
+		shouldHighlight(name) {
+			return name === this.selectedComponent;
+		}
+	},
+	watch: {
+		$route(to, from) {
+			TOP_LEVEL_ROUTES.forEach(route => {
+				if (to.path.includes(route)) this.selectedComponent = route;
+			});
+		}
+	},
 	created() {
 		if (this.$route.path === '/teacher')
 			this.$router.push({ name: 'teacher-dashboard' });

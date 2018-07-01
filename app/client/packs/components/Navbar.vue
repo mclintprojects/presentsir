@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="nav-bar" class="flex center-vertical">
-            <p id="brand-name">Present, Sir</p>
+            <p>Present, Sir</p>
             <div class="flex center-vertical">
                 <el-badge is-dot>
                     <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530450965/present-sir/twotone-notifications-24px.svg" />
@@ -19,7 +19,7 @@
 export default {
 	data() {
 		return {
-			collapsed: true
+			collapsed: false
 		};
 	},
 	computed: {
@@ -31,6 +31,7 @@ export default {
 		this.$nextTick(() => {
 			window.addEventListener('resize', () => {
 				if (window.innerWidth > 567) this.collapsed = false;
+				else this.collapsed = true;
 			});
 		});
 	}
@@ -38,10 +39,6 @@ export default {
 </script>
 
 <style lang="scss">
-#brand-name {
-	font-weight: bold;
-}
-
 #nav-bar {
 	padding: 16px;
 	justify-content: space-between;
@@ -70,10 +67,14 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: rgba(0, 0, 0, 0.8);
+	color: rgba(0, 0, 0, 0.54);
 
 	img {
 		margin-right: 16px;
+	}
+
+	p {
+		font-size: 12px;
 	}
 
 	&:hover {
@@ -81,6 +82,10 @@ export default {
 		border-bottom: 2px solid #fe0040;
 		cursor: pointer;
 	}
+}
+
+.highlight {
+	border-bottom: 2px solid #fe0040;
 }
 
 @media screen and (max-width: 567px) {

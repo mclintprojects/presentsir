@@ -18,7 +18,7 @@
 				<el-input v-model="loginData.email" class="input" placeholder="Email address" />
 
 				<label>Password</label>
-				<el-input v-model="loginData.password" class="input" placeholder="Password" type="password" />
+				<el-input @keyup.enter="loginUser" v-model="loginData.password" class="input" placeholder="Password" type="password" />
 
 				<div>
 					<el-radio v-model="loginData.user_type" label="teacher">Teacher</el-radio>
@@ -45,7 +45,7 @@
 				<el-input v-model="signupData.email" class="input" placeholder="Email address" type="email"/>
 
 				<label>Password</label>
-				<el-input v-model="signupData.password" class="input" placeholder="Password" type="password" />
+				<el-input @keyup.enter="loginUser" v-model="signupData.password" class="input" placeholder="Password" type="password" />
 
 				<div>
 					<el-radio v-model="signupData.user_type" label="teacher">Teacher</el-radio>

@@ -18,9 +18,12 @@
 	padding: 0;
 }
 
-#app {
-	font-family: Arial, Helvetica, sans-serif !important;
+body {
 	background-color: var(--background-color);
+}
+
+#app {
+	font-family: 'Muli', Arial, Helvetica, sans-serif !important;
 }
 
 .container {
