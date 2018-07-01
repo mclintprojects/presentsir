@@ -22,16 +22,16 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe '#POST users/login' do
-        it 'should create a new user' do
+        it 'should login user' do
             user_params = {
                 first_name: Forgery('name').first_name,
                 last_name: Forgery('name').last_name,
                 email: Forgery('internet').email_address,
-                password: Forgery('basic').password,
+                password: 'password',
                 user_type: 'teacher'
             };
 
-            User.create(user_params);
+            user = User.create(user_params);
 
             post :login, params: {user: user_params}
             expect(JSON.parse(response.body)['first_name']).to eq(user_params[:first_name])
@@ -43,7 +43,7 @@ RSpec.describe UsersController, type: :controller do
                 first_name: Forgery('name').first_name,
                 last_name: Forgery('name').last_name,
                 email: Forgery('internet').email_address,
-                password: Forgery('basic').password,
+                password: 'password',
                 user_type: 'teacher'
             };
 
