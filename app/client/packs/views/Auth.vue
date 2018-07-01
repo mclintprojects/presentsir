@@ -14,11 +14,11 @@
 
 		<el-dialog title="Login" :visible.sync="showLoginDialog">
 			<div class="auth-dialog">
-				<label>Username</label>
-				<el-input class="input" placeholder="Username" />
+				<label>Email address</label>
+				<el-input v-model="loginData.email" class="input" placeholder="Email address" />
 
 				<label>Password</label>
-				<el-input class="input" placeholder="Password" type="password" />
+				<el-input v-model="loginData.password" class="input" placeholder="Password" type="password" />
 
 				<div>
 					<el-radio v-model="loginData.user_type" label="teacher">Teacher</el-radio>
@@ -26,7 +26,7 @@
 				</div>
 
 				<el-row type="flex" justify="end" style="margin-top: 16px;">
-					<el-button type="success" round>Login</el-button>
+					<el-button type="success" round @click="loginUser" :disabled="isLoggingIn" :loading="isLoggingIn">Login</el-button>
 				</el-row>
 
 				<error-bag :errors="loginErrors" />
@@ -64,7 +64,7 @@
 
 <script>
 import axios from 'axios';
-import ErrorBag from '../../components/ErrorBag';
+import ErrorBag from '../components/ErrorBag';
 
 export default {
 	components: { ErrorBag },
@@ -73,6 +73,7 @@ export default {
 			showLoginDialog: false,
 			showSignupDialog: false,
 			isSigningUp: false,
+			isLoggingIn: false,
 			signupData: {
 				first_name: '',
 				last_name: '',
@@ -96,14 +97,40 @@ export default {
 		async signupUser() {
 			try {
 				this.isSigningUp = true;
+				this.signupErrors = [];
 				const response = await axios.post('/users/signup', this.signupData);
 				if (response.status === 201) {
-					this.$router.push({ name: 'student-home' });
+					const whereTo =
+						this.signupData.user_type === 'teacher'
+							? 'teacher-home'
+							: 'student-home';
+
+					this.$router.push({ name: whereTo });
 					this.isSigningUp = false;
 				}
 			} catch (err) {
 				this.signupErrors = err.response.data.errors;
 				this.isSigningUp = false;
+			}
+		},
+		async loginUser() {
+			try {
+				this.isLoggingIn = true;
+				this.loginErrors = [];
+				const response = await axios.post('/users/login', this.loginData);
+				console.log(response.status);
+				if (response.status === 200) {
+					const whereTo =
+						this.loginData.user_type === 'teacher'
+							? 'teacher-home'
+							: 'student-home';
+
+					this.$router.push({ name: whereTo });
+					this.isLoggingIn = false;
+				}
+			} catch (err) {
+				this.loginErrors = err.response.data.errors;
+				this.isLoggingIn = false;
 			}
 		}
 	}

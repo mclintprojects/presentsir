@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Auth from './views/auth/Auth.vue';
+import Auth from './views/Auth.vue';
 import StudentHome from './views/student/Home';
 import TeacherHome from './views/teacher/Home';
 

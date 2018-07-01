@@ -21,19 +21,20 @@ class UsersController < ApplicationController
     end
 
     def login
-        user = User.find_by(email: login_params[:email])
+        user = User.find_by(email: login_params[:email], user_type: login_params[:user_type])
         if(user.present? && user.authenticate(login_params[:password]))
             session[:user] = user
             render json: user, serializer: UsersSerializer, status: 200
         else
-            render json: {errors: "Invalid email - password combination."}, status: 422
+            render json: {errors: ["Invalid email - password combination."]}, status: 422
         end
     end
 
     def login_params
         params.require(:user).permit(
             :email,
-            :password
+            :password,
+            :user_type
         )
     end
 end
