@@ -2,6 +2,9 @@ class UsersController < ApplicationController
     def signup
         user = User.new(signup_params)
         if(user.save)
+            Teacher.create(user_id: user.id) if user.user_type == 'teacher'
+            Student.create(user_id: user.id) if user.user_type == 'student'
+
             session[:user] = user
             render json: user, serializer: UsersSerializer, status: 201
         else
