@@ -4,4 +4,5 @@ class Course < ApplicationRecord
     belongs_to :teacher
     has_many :attendances
     has_many :course_reps
+    has_many :course_subscriptions
 end

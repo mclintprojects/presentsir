@@ -6,4 +6,5 @@ RSpec.describe Course, type: :model do
   it {should belong_to :teacher}
   it {should have_many :attendances}
   it {should have_many :course_reps}
+  it {should have_many :course_subscriptions}
 end

@@ -1,5 +1,9 @@
 class CourseSerializer < ActiveModel::Serializer
-    attributes :id, :name, :identifier, :course_reps
+    attributes :id, :name, :identifier, :course_reps, :enrollments
 
     has_many :course_reps, serializer: CourseRepSerializer
+
+    def enrollments
+        object.course_subscriptions.count
+    end
 end
