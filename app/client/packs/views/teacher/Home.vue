@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-row>
-            <el-col :lg="4">
+            <el-col :lg="menuWidth">
                 <el-menu 
                 style="min-height: 100vh"
                 default-active="2"
@@ -11,7 +11,6 @@
                 :collapse="collapsed">
                     <el-menu-item index="1" @click="collapsed = !collapsed">
                         <img class="el-icon-menu" :src="menuIcon" />
-                        <span slot="title">Menu</span>
                     </el-menu-item>
                     <el-menu-item index="2">
                         <img class="el-icon-menu" src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530444774/present-sir/twotone-dashboard-24px.svg" />
@@ -31,6 +30,11 @@
                     </el-menu-item>
                 </el-menu>
             </el-col>
+            <el-col class="dashboard-container" :lg="dashboardWidth">
+                <keep-alive>
+                    <router-link></router-link>
+                </keep-alive>
+            </el-col>
         </el-row>
     </div>
 </template>
@@ -47,11 +51,20 @@ export default {
 			return this.collapsed
 				? 'https://res.cloudinary.com/mclint-cdn/image/upload/v1530444774/present-sir/twotone-menu-24px.svg'
 				: 'https://res.cloudinary.com/mclint-cdn/image/upload/v1530444774/present-sir/twotone-arrow_back-24px.svg';
+		},
+		menuWidth() {
+			return this.collapsed ? 1 : 3;
+		},
+		dashboardWidth() {
+			return this.collapsed ? 22 : 20;
 		}
 	},
 	methods: {}
 };
 </script>
 
-<style>
+<style lang="scss">
+.dashboard-container {
+	padding: 16px;
+}
 </style>
