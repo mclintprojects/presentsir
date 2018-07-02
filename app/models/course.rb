@@ -4,7 +4,7 @@ class Course < ApplicationRecord
     belongs_to :teacher
     has_many :attendances, dependent: :destroy
     has_many :course_reps, dependent: :destroy
-    has_many :course_subscriptions, dependent: :destroy
+    has_many :enrollments, dependent: :destroy
 
     validate :teacher_cannot_create_same_course
 

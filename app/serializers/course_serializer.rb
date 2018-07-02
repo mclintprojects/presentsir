@@ -4,6 +4,6 @@ class CourseSerializer < ActiveModel::Serializer
     has_many :course_reps, serializer: CourseRepSerializer
 
     def enrollments
-        object.course_subscriptions.count
+        object.enrollments.count
     end
 end
