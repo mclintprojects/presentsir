@@ -10,6 +10,7 @@
             </ul>
         </div>
         <el-tabs v-model="activeTab">
+            <el-tab-pane label="Enrollments" name="enrollments"></el-tab-pane>
             <el-tab-pane label="Enroll" name="enroll">
                 <p id="enroll-message">
                     Your teacher should provide their course's identifier which you will use to enroll 
@@ -21,7 +22,6 @@
                     <el-button slot="append" @click="findCourse" :disabled="isEnrollingUser" :loading="isEnrollingUser">Enroll</el-button>
                 </el-input>
             </el-tab-pane>
-            <el-tab-pane label="Enrollments" name="enrollments"></el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -33,9 +33,10 @@ export default {
 	data() {
 		return {
 			logging_courses: [],
-			activeTab: 'enroll',
+			activeTab: 'enrollments',
 			enrollQuery: '',
-			isEnrollingUser: false
+			isEnrollingUser: false,
+			enrollments: []
 		};
 	},
 	methods: {
@@ -55,8 +56,21 @@ export default {
 				this.isEnrollingUser = false;
 			}
 		},
-		async enrollUser() {
-			this.isEnrollingUser = false;
+		async enrollUser(id) {
+			try {
+				const response = await axios.post(`/enrollment/new?courseId=${id}`);
+				if (response.status === 201) {
+					this.$message({
+						message: 'Successfully enrolled in course.',
+						type: 'success'
+					});
+				}
+
+				this.isEnrollingUser = false;
+			} catch (err) {
+				this.$message.error(err.response.data.errors[0]);
+				this.isEnrollingUser = false;
+			}
 		}
 	}
 };
