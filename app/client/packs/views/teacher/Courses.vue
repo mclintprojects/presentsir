@@ -2,9 +2,7 @@
     <div class="app-container">
         <el-row :gutter="32">
             <el-col :sm="24" :lg="20">
-                <el-input placeholder="Search for a class" size="medium">
-                    <el-button slot="append">Search</el-button>
-                </el-input>
+                <el-input v-model="query" placeholder="Search for a class" size="medium" />
             </el-col>
             <el-col :sm="24" :lg="4">
                 <el-button @click="showAddCourseDialog = true" id="add-class-btn" type="danger" size="medium" icon="el-icon-plus" round>Add course</el-button>
@@ -43,6 +41,7 @@ export default {
 	components: { ErrorBag },
 	data() {
 		return {
+			query: '',
 			showAddCourseDialog: false,
 			isAddingCourse: false,
 			formData: {
@@ -53,11 +52,16 @@ export default {
 		};
 	},
 	computed: {
-		courses() {
-			return this.$store.getters.courses;
-		},
 		pagination() {
-			return this.$store.getters.coursesPagination || { total_count: 0 };
+			return this.$store.getters.coursesPagination || { total_count: 1000 };
+		},
+		courses() {
+			return this.$store.getters.courses.filter(
+				course =>
+					course.name.includesInvariant(this.query) ||
+					course.identifier.includesInvariant(this.query) ||
+					course.course_code.includesInvariant(this.query)
+			);
 		}
 	},
 	methods: {

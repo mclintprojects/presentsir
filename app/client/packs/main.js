@@ -19,3 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		store
 	});
 });
+
+String.prototype.includesInvariant = function(query) {
+	return this.toLowerCase().includes(query.toLowerCase());
+};

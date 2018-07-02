@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const state = {
-	courseData: {}
+	courseData: {
+		courses: []
+	}
 };
 
 const getters = {
