@@ -6,7 +6,7 @@
 
 <style lang="scss">
 :root {
-	--background-color: #f5f8fa;
+	--background-color: #e9eef3;
 	--primary-color: #323a4b;
 	--accent-color: #fe0040;
 	--primary-text-color: rgba(0, 0, 0, 0.8);

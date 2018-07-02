@@ -8,13 +8,16 @@
                 <el-button @click="showAddCourseDialog = true" id="add-class-btn" type="danger" size="medium" icon="el-icon-plus" round>Add course</el-button>
             </el-col>
         </el-row>
-		<el-table @cell-click="cellClicked" :data="courses" stripe style="margin-top: 16px; width: 100%;" empty-text="You haven't added any courses yet.">
-			<el-table-column prop="identifier" label="Identifier" :min-width="130" />
-			<el-table-column prop="name" label="Name" :min-width="150" />
-			<el-table-column prop="course_code" label="Course code" :min-width="110" />
-		</el-table>
+		<ul class="courses-list">
+			<li v-for="(course, index) in courses" :key="index" @click="cellClicked(course.id)">
+				<div class="flex flex-column">
+					<p>{{course.name}}</p>
+					<p>{{course.course_code}} <span :class="{hidden:!course.course_code}">|</span> Identifier: <span>{{course.identifier}}</span></p>
+				</div>
+			</li>
+		</ul>
 		<div class="flex center-horizontal" style="margin-top: 16px;">
-			<el-pagination layout="pager" :total="pagination.total_count" :page-size="30" @current-change="currentPageChanged" />
+			<el-pagination background layout="pager" :total="pagination.total_count" :page-size="30" @current-change="currentPageChanged" />
 		</div>
         <el-dialog title="Add a new class" :visible.sync="showAddCourseDialog">
             <label>Name</label>
@@ -85,9 +88,8 @@ export default {
 				this.errors = err.response.data.errors;
 			}
 		},
-		cellClicked(row, col) {
-			console.log({ col });
-			alert(row.id);
+		cellClicked(id) {
+			alert(id);
 		},
 		currentPageChanged(page) {
 			this.$store.dispatch('getCourses', page);
@@ -100,6 +102,37 @@ export default {
 </script>
 
 <style lang="scss">
+.courses-list {
+	margin-top: 24px;
+	list-style-type: none;
+
+	li {
+		color: rgba(0, 0, 0, 0.54);
+		margin-bottom: 16px;
+		background: white;
+		padding: 16px;
+		border-radius: 5px;
+
+		&:hover {
+			cursor: pointer;
+			background-color: rgb(243, 243, 243);
+		}
+
+		p:nth-child(1) {
+			font-weight: bold;
+			color: rgba(0, 0, 0, 0.8);
+		}
+
+		p:nth-child(2) {
+			font-size: 13px;
+
+			span:nth-child(1) {
+				margin: 0px 8px;
+				color: rgb(212, 212, 212);
+			}
+		}
+	}
+}
 @media screen and (max-width: 567px) {
 	#add-class-btn {
 		margin-top: 16px;
