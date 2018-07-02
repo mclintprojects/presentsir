@@ -10,7 +10,15 @@
             </ul>
         </div>
         <el-tabs v-model="activeTab">
-            <el-tab-pane label="Enrollments" name="enrollments"></el-tab-pane>
+            <el-tab-pane label="Enrollments" name="enrollments">
+				<div id="student-enrollments" v-for="(enrollment, index) in enrollments" :key="index">
+					<div>
+						<p>{{enrollment.course.teacher_name}}</p>
+						<p>{{enrollment.course.name}}<span>|</span>{{enrollment.course.identifier}}</p>
+					</div>
+					<div><el-button type="danger" icon="el-icon-remove" round>Unenroll</el-button></div>
+				</div>
+			</el-tab-pane>
             <el-tab-pane label="Enroll" name="enroll">
                 <p id="enroll-message">
                     Your teacher should provide their course's identifier which you will use to enroll 
@@ -67,11 +75,19 @@ export default {
 				}
 
 				this.isEnrollingUser = false;
+				this.getEnrollments();
 			} catch (err) {
 				this.$message.error(err.response.data.errors[0]);
 				this.isEnrollingUser = false;
 			}
+		},
+		async getEnrollments() {
+			const response = await axios.get('/enrollment/student/all');
+			this.enrollments = response.data;
 		}
+	},
+	activated() {
+		this.getEnrollments();
 	}
 };
 </script>
@@ -107,7 +123,32 @@ export default {
 
 		&:hover {
 			cursor: pointer;
-			background: hsl(210, 29%, 83%);
+			background: hsl(210, 29%, 89%);
+		}
+	}
+}
+
+#student-enrollments {
+	color: rgba(0, 0, 0, 0.54);
+	font-size: 13px;
+	border-bottom: 1px solid rgb(212, 212, 212);
+	display: flex;
+	justify-content: space-between;
+	padding: 16px;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	p:nth-child(1) {
+		font-size: 18px;
+		color: rgba(0, 0, 0, 0.8);
+	}
+
+	p:nth-child(2) {
+		span:nth-child(1) {
+			margin: 0px 8px;
+			color: rgb(212, 212, 212);
 		}
 	}
 }
