@@ -19,7 +19,7 @@
 		<div class="flex center-horizontal" style="margin-top: 16px;">
 			<el-pagination background layout="pager" :total="pagination.total_count" :page-size="30" @current-change="currentPageChanged" />
 		</div>
-        <el-dialog title="Add a new class" :visible.sync="showAddCourseDialog">
+        <el-dialog title="Add a new class" :visible.sync="showAddCourseDialog" :before-close="dialogClosing">
             <label>Name</label>
             <el-input class="input" v-model="formData.name" placeholder="Enter the name of the clouse" />
 
@@ -93,6 +93,11 @@ export default {
 		},
 		currentPageChanged(page) {
 			this.$store.dispatch('getCourses', page);
+		},
+		dialogClosing(done) {
+			this.formData = {};
+			this.errors = [];
+			done();
 		}
 	},
 	activated() {
