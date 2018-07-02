@@ -1,4 +1,4 @@
-class CourseSubscription < ApplicationRecord
+class Enrollment < ApplicationRecord
     validates_presence_of :course_id
     validates_presence_of :student_id
 
