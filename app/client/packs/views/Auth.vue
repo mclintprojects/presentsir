@@ -8,17 +8,17 @@
     <p class="msg-subtitle">Class attendance logging made easy.</p>
 
     <el-row id="auth-buttons-container">
-      <el-button type="info" round @click="showLoginDialog = true">Login</el-button>
+      <el-button type="info" round @click="resumeSessionOrLogin">Login</el-button>
       <el-button type="info" round @click="showSignupDialog = true">Signup</el-button>
     </el-row>
 
-	<el-dialog title="Login" :visible.sync="showLoginDialog">
+	<el-dialog title="Login" :visible.sync="showLoginDialog" :before-close="dialogClose">
 		<div class="auth-dialog">
 			<label>Email address</label>
 			<el-input v-model="loginData.email" class="input" placeholder="Email address" />
 
 			<label>Password</label>
-			<el-input @keyup.enter="loginUser" v-model="loginData.password" class="input" placeholder="Password" type="password" />
+			<el-input @keyup.enter.native="loginUser" v-model="loginData.password" class="input" placeholder="Password" type="password" />
 
 			<div>
 				<el-radio v-model="loginData.user_type" label="teacher">Teacher</el-radio>
@@ -33,7 +33,7 @@
 		</div>
 	</el-dialog>
 
-	<el-dialog title="Signup" :visible.sync="showSignupDialog">
+	<el-dialog title="Signup" :visible.sync="showSignupDialog" :before-close="dialogClose">
 		<div class="auth-dialog">
 			<label>First name</label>
 			<el-input v-model="signupData.first_name" class="input" placeholder="First name" />
@@ -45,7 +45,7 @@
 			<el-input v-model="signupData.email" class="input" placeholder="Email address" type="email"/>
 
 			<label>Password</label>
-			<el-input @keyup.enter="loginUser" v-model="signupData.password" class="input" placeholder="Password" type="password" />
+			<el-input @keyup.enter.native="loginUser" v-model="signupData.password" class="input" placeholder="Password" type="password" />
 
 			<div>
 				<el-radio v-model="signupData.user_type" label="teacher">Teacher</el-radio>
@@ -117,20 +117,32 @@ export default {
 			try {
 				this.isLoggingIn = true;
 				this.loginErrors = [];
-				const response = await axios.post('/users/login', this.loginData);
-				if (response.status === 200) {
-					const whereTo =
-						this.loginData.user_type === 'teacher'
-							? 'teacher-home'
-							: 'student-home';
 
-					this.$router.push({ name: whereTo });
-					this.isLoggingIn = false;
-				}
+				const response = await axios.post('/users/login', this.loginData);
+				if (response.status === 200) this.proceedToLogin(response.data);
 			} catch (err) {
 				this.loginErrors = err.response.data.errors;
 				this.isLoggingIn = false;
 			}
+		},
+		proceedToLogin(user) {
+			const whereTo =
+				user.user_type === 'teacher' ? 'teacher-home' : 'student-home';
+
+			this.$store.dispatch('setUser', user);
+			this.$router.push({ name: whereTo });
+		},
+		async resumeSessionOrLogin() {
+			const response = await axios.get('/auth/get_session');
+			if (response.data.user) this.proceedToLogin(response.data.user);
+			else this.showLoginDialog = true;
+		},
+		dialogClose(done) {
+			this.loginData = {};
+			this.signupData = {};
+			this.signupErrors = [];
+			this.loginErrors = [];
+			done();
 		}
 	}
 };

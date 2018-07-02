@@ -10,16 +10,14 @@
                 <el-button @click="showAddCourseDialog = true" id="add-class-btn" type="danger" size="medium" icon="el-icon-plus" round>Add course</el-button>
             </el-col>
         </el-row>
-		<el-table :data="courses" style="margin-top: 16px" empty-text="You haven't added any courses yet.">
-			<el-table-column prop="identifier" label="Identifier" />
-			<el-table-column prop="name" label="Name" />
-			<el-table-column prop="course_code" label="Course code" />
-			<el-table-column>
-				<template slot-scope="scope">
-					<el-button size="mini" type="success" round>View</el-button>
-				</template>
-			</el-table-column>
+		<el-table @cell-click="cellClicked" :data="courses" stripe style="margin-top: 16px; width: 100%;" empty-text="You haven't added any courses yet.">
+			<el-table-column prop="identifier" label="Identifier" :min-width="130" />
+			<el-table-column prop="name" label="Name" :min-width="150" />
+			<el-table-column prop="course_code" label="Course code" :min-width="110" />
 		</el-table>
+		<div class="flex center-horizontal" style="margin-top: 16px;">
+			<el-pagination layout="pager" :total="pagination.total_count" :page-size="30" />
+		</div>
         <el-dialog title="Add a new class" :visible.sync="showAddCourseDialog">
             <label>Name</label>
             <el-input class="input" v-model="formData.name" placeholder="Enter the name of the clouse" />
@@ -57,6 +55,9 @@ export default {
 	computed: {
 		courses() {
 			return this.$store.getters.courses;
+		},
+		pagination() {
+			return this.$store.getters.coursesPagination || { total_count: 0 };
 		}
 	},
 	methods: {
@@ -64,6 +65,7 @@ export default {
 			try {
 				this.errors = [];
 				this.isAddingCourse = true;
+
 				const response = await axios.post('/course/new', {
 					course: this.formData
 				});
@@ -78,6 +80,10 @@ export default {
 				this.isAddingCourse = false;
 				this.errors = err.response.data.errors;
 			}
+		},
+		cellClicked(row, col) {
+			console.log({ col });
+			alert(row.id);
 		}
 	},
 	activated() {

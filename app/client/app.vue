@@ -84,6 +84,12 @@ body {
 	width: 30% !important;
 }
 
+.el-table__row {
+	&:hover {
+		cursor: pointer;
+	}
+}
+
 @media screen and (max-width: 567px) {
 	.container {
 		width: 95%;

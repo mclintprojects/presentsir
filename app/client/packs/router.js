@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
+import store from './store/store';
 import Router from 'vue-router';
 import Auth from './views/Auth.vue';
 import StudentHome from './views/student/Home';
@@ -21,7 +22,11 @@ const router = new Router({
 			path: '/student',
 			name: 'student-home',
 			component: StudentHome,
-			children: []
+			children: [],
+			async beforeEnter(to, from, next) {
+				const response = await axios.get('/auth/get_session');
+				response.data.user.user_type == 'student' ? next() : next('/');
+			}
 		},
 		{
 			path: '/teacher',
@@ -38,7 +43,11 @@ const router = new Router({
 					name: 'teacher-courses',
 					component: TeacherCourses
 				}
-			]
+			],
+			async beforeEnter(to, from, next) {
+				const response = await axios.get('/auth/get_session');
+				response.data.user.user_type == 'teacher' ? next() : next('/');
+			}
 		}
 	],
 	mode: 'history'
