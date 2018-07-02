@@ -23,7 +23,7 @@
 			<p>Are you sure you want to delete this course?</p>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="showDeleteConfirmation = false" round>Cancel</el-button>
-				<el-button type="danger" @click="deleteCourse" round>Confirm</el-button>
+				<el-button type="danger" @click="deleteCourse" :loading="isDeletingCourse" round>Delete</el-button>
 			</span>
 		</el-dialog>
     </div>
@@ -38,18 +38,24 @@ export default {
 		return {
 			course: {},
 			activeTab: 'enrollments',
-			showDeleteConfirmation: false
+			showDeleteConfirmation: false,
+			isDeletingCourse: false
 		};
 	},
 	methods: {
 		async deleteCourse() {
 			try {
+				this.isDeletingCourse = true;
 				const response = await axios.delete(
-					`course/delete?id=${this.course.id}`
+					`/course/delete?id=${this.course.id}`
 				);
+
+				this.showDeleteConfirmation = false;
 				this.$router.go(-1);
+				this.isDeletingCourse = false;
 			} catch (err) {
 				this.$message.error(err.response.data.errors[0]);
+				this.isDeletingCourse = false;
 			}
 		}
 	},
