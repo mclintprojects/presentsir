@@ -1,11 +1,14 @@
 class CourseController < ApplicationController
   def all
-    data = Course.where(teacher_id: session[:teacher_id]).page(params[:pageNumber]).per(30)
+    data = Course.where(teacher_id: session[:teacher_id])
+    total_count = data.count
+    data = data.page(params[:pageNumber]).per(30)
+    
     pagination = {
       current_page: data.current_page,
       prev_page: data.prev_page,
       next_page: data.next_page,
-      total_count: data.count,
+      total_count: total_count,
      }
 
     render json: data, each_serializer: CourseSerializer, status: 200, meta: pagination, adapter: :json

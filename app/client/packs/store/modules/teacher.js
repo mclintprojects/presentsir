@@ -20,9 +20,9 @@ const mutations = {
 };
 
 const actions = {
-	getCourses: async ({ commit }) => {
+	getCourses: async ({ commit }, page = 1) => {
 		try {
-			const response = await axios.get('/course/all');
+			const response = await axios.get(`/course/all?pageNumber=${page}`);
 			commit('setCourseData', response.data);
 		} catch (err) {}
 	},

@@ -14,7 +14,7 @@
 			<el-table-column prop="course_code" label="Course code" :min-width="110" />
 		</el-table>
 		<div class="flex center-horizontal" style="margin-top: 16px;">
-			<el-pagination layout="pager" :total="pagination.total_count" :page-size="30" />
+			<el-pagination layout="pager" :total="pagination.total_count" :page-size="30" @current-change="currentPageChanged" />
 		</div>
         <el-dialog title="Add a new class" :visible.sync="showAddCourseDialog">
             <label>Name</label>
@@ -88,6 +88,9 @@ export default {
 		cellClicked(row, col) {
 			console.log({ col });
 			alert(row.id);
+		},
+		currentPageChanged(page) {
+			this.$store.dispatch('getCourses', page);
 		}
 	},
 	activated() {
