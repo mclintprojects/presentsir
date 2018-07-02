@@ -1,6 +1,17 @@
 class CourseController < ApplicationController
   def search
-    render json: Course.find(params[:id]), serializer: CourseSerializer
+    course = nil
+    if(params[:id].present?)
+      course = Course.find(params[:id])
+    elsif (params[:identifier].present?)
+      course = Course.find_by(identifier: params[:identifier])
+    end
+    
+    if(course.present?)
+      render json: course, serializer: CourseSerializer
+    else
+      render json: {errors: ['Could not find a course matching those parameters']}, status: 422
+    end
   end
   
   def all

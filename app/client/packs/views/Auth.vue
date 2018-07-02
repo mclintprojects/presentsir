@@ -138,8 +138,8 @@ export default {
 			else this.showLoginDialog = true;
 		},
 		dialogClose(done) {
-			this.loginData = {};
-			this.signupData = {};
+			this.loginData = { user_type: 'teacher' };
+			this.signupData = { user_type: 'teacher' };
 			this.signupErrors = [];
 			this.loginErrors = [];
 			done();

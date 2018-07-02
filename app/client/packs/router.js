@@ -3,7 +3,9 @@ import axios from 'axios';
 import store from './store/store';
 import Router from 'vue-router';
 import Auth from './views/Auth.vue';
+
 import StudentHome from './views/student/Home';
+import StudentCourses from './views/student/Courses';
 
 import TeacherHome from './views/teacher/Home';
 import TeacherDashboard from './views/teacher/Dashboard';
@@ -23,7 +25,13 @@ const router = new Router({
 			path: '/student',
 			name: 'student-home',
 			component: StudentHome,
-			children: [],
+			children: [
+				{
+					path: 'courses',
+					name: 'student-courses',
+					component: StudentCourses
+				}
+			],
 			async beforeEnter(to, from, next) {
 				const response = await axios.get('/auth/get_session');
 				response.data.user.user_type == 'student' ? next() : next('/');

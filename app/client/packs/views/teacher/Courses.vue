@@ -120,7 +120,7 @@ export default {
 
 		&:hover {
 			cursor: pointer;
-			background-color: rgb(243, 243, 243);
+			background-color: hsl(210, 29%, 83%);
 		}
 
 		p:nth-child(1) {

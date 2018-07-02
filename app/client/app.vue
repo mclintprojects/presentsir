@@ -24,6 +24,7 @@ body {
 
 #app {
 	font-family: 'Muli', Arial, Helvetica, sans-serif !important;
+	color: var(--primary-text-color);
 }
 
 .container {
@@ -37,6 +38,7 @@ body {
 
 .flex {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .flex-column {
@@ -52,7 +54,7 @@ body {
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .input {
@@ -90,6 +92,20 @@ body {
 	}
 }
 
+.app-container {
+	padding: 16px;
+	margin: auto;
+	width: 50%;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.shadow {
+	box-shadow: 0px 2px 6px 0px rgb(231, 231, 231);
+}
+
 @media screen and (max-width: 567px) {
 	.container {
 		width: 95%;
@@ -97,6 +113,10 @@ body {
 
 	.el-dialog {
 		width: 90% !important;
+	}
+
+	.app-container {
+		width: calc(100% - 32px);
 	}
 }
 </style>

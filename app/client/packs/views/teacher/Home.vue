@@ -13,7 +13,7 @@
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445880/present-sir/twotone-school-24px.svg" />
                 <p>Attendance</p>
             </div>
-            <div class="main-menu-item">
+            <div class="main-menu-item hidden">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445995/present-sir/twotone-settings-24px.svg" />
                 <p>Settings</p>
             </div>
@@ -82,15 +82,4 @@ export default {
 </script>
 
 <style lang="scss">
-.app-container {
-	padding: 16px;
-	margin: auto;
-	width: 50%;
-}
-
-@media screen and (max-width: 567px) {
-	.app-container {
-		width: calc(100% - 32px);
-	}
-}
 </style>
