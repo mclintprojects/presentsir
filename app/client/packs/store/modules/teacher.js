@@ -20,7 +20,7 @@ const actions = {
 			commit('setCourses', response.data);
 		} catch (err) {}
 	},
-	addCourse: ({ commit }, course) => commit('addClass', course)
+	addCourse: ({ commit }, course) => commit('addCourse', course)
 };
 
 export default {

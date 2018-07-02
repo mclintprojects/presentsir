@@ -69,7 +69,11 @@ export default {
 				});
 
 				this.$store.dispatch('addCourse', response.data);
+
 				this.isAddingCourse = false;
+				this.showAddCourseDialog = false;
+				this.formData.name = '';
+				this.formData.course_code = '';
 			} catch (err) {
 				this.isAddingCourse = false;
 				this.errors = err.response.data.errors;
