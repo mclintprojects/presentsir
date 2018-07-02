@@ -2,9 +2,9 @@ class Course < ApplicationRecord
     validates_presence_of :name
     validates_presence_of :identifier
     belongs_to :teacher
-    has_many :attendances
-    has_many :course_reps
-    has_many :course_subscriptions
+    has_many :attendances, dependent: :destroy
+    has_many :course_reps, dependent: :destroy
+    has_many :course_subscriptions, dependent: :destroy
 
     validate :teacher_cannot_create_same_course
 

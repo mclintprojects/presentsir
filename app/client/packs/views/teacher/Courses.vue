@@ -89,7 +89,7 @@ export default {
 			}
 		},
 		cellClicked(id) {
-			alert(id);
+			this.$router.push({ name: 'course-detail', params: { id } });
 		},
 		currentPageChanged(page) {
 			this.$store.dispatch('getCourses', page);

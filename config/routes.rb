@@ -9,9 +9,10 @@ Rails.application.routes.draw do
   post 'auth/logout'
 
   get 'course/all'
+  get 'course/search'
   post 'course/new'
   post 'course/update'
-  post 'course/delete'
+  delete 'course/delete'
 
   match "*path", to: "home#index", format: false, via: :get
 end

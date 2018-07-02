@@ -8,6 +8,7 @@ import StudentHome from './views/student/Home';
 import TeacherHome from './views/teacher/Home';
 import TeacherDashboard from './views/teacher/Dashboard';
 import TeacherCourses from './views/teacher/Courses';
+import CourseDetail from './views/teacher/CourseDetail';
 
 Vue.use(Router);
 
@@ -42,6 +43,11 @@ const router = new Router({
 					path: 'courses',
 					name: 'teacher-courses',
 					component: TeacherCourses
+				},
+				{
+					path: 'courses/:id',
+					name: 'course-detail',
+					component: CourseDetail
 				}
 			],
 			async beforeEnter(to, from, next) {

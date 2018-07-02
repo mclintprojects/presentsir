@@ -1,4 +1,8 @@
 class CourseController < ApplicationController
+  def search
+    render json: Course.find(params[:id]), serializer: CourseSerializer
+  end
+  
   def all
     data = Course.where(teacher_id: session[:teacher_id])
     total_count = data.count
@@ -39,6 +43,12 @@ class CourseController < ApplicationController
   end
 
   def delete
-    render json: {}, status: 200
+    course = Course.find(params[:id])
+    if(session[:teacher_id] == course.teacher_id)
+      course.destroy
+      render json: {}, status: 200
+    else
+      render json: {errors: ['You cannot delete this course.']}, status: 403
+    end
   end
 end

@@ -26,10 +26,25 @@ RSpec.describe CourseController, type: :controller do
     end
   end
 
-  describe "GET #delete" do
-    it "returns http success" do
-      post :delete
-      expect(response).to have_http_status(:success)
+  describe "DELETE #delete" do
+    it "will delete course" do
+      course = create(:course)
+
+      before_count = Course.all.count
+      session[:teacher_id] = course.teacher_id
+      post :delete, params: {id: course.id}
+      expect(response).to have_http_status(200)
+      expect(Course.all.count).to eq(before_count - 1)
+    end
+
+    it "will not delete another teacher's course" do
+      course = create(:course)
+
+      before_count = Course.all.count
+      session[:teacher_id] = -1
+      post :delete, params: {id: course.id}
+      expect(response).to have_http_status(403)
+      expect(Course.all.count).to eq(before_count)
     end
   end
 

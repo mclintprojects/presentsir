@@ -32,6 +32,7 @@
 
 <script>
 import Navbar from '../../components/Navbar';
+import eventbus from '../../eventbus';
 
 const TOP_LEVEL_ROUTES = ['teacher-dashboard', 'teacher-courses'];
 export default {
@@ -71,6 +72,11 @@ export default {
 		if (this.$route.path === '/teacher')
 			this.$router.push({ name: 'teacher-dashboard' });
 		this.$store.dispatch('setUser');
+
+		eventbus.$on(
+			'navigatedToChildRoute',
+			component => (this.selectedComponent = component)
+		);
 	}
 };
 </script>
