@@ -10,12 +10,14 @@ Rails.application.routes.draw do
 
   get 'course/all'
   get 'course/search'
-  post 'course/new'
-  post 'course/update'
-  delete 'course/delete'
+  post 'course', to: 'course#new'
+  put 'course', to: 'course#update'
+  delete 'course', to: 'course#delete'
 
   get 'enrollment/student/all', to: 'enrollment#all_student'
-  post 'enrollment/new'
+  get 'enrollment/is_logging_attendance'
+  post 'enrollment', to: 'enrollment#new'
+  delete 'enrollment', to: 'enrollment#delete'
 
   match "*path", to: "home#index", format: false, via: :get
 end

@@ -73,7 +73,7 @@ export default {
 				this.errors = [];
 				this.isAddingCourse = true;
 
-				const response = await axios.post('/course/new', {
+				const response = await axios.post('/course', {
 					course: this.formData
 				});
 

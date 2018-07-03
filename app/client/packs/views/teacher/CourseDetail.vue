@@ -46,9 +46,7 @@ export default {
 		async deleteCourse() {
 			try {
 				this.isDeletingCourse = true;
-				const response = await axios.delete(
-					`/course/delete?id=${this.course.id}`
-				);
+				const response = await axios.delete(`/course?id=${this.course.id}`);
 
 				this.showDeleteConfirmation = false;
 				this.$router.go(-1);

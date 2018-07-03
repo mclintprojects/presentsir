@@ -11,4 +11,14 @@ class EnrollmentController < ApplicationController
       render json: {errors: enrollment.errors.full_messages}, status: 422
     end
   end
+
+  def is_logging_attendance
+    not_logging_ids = Course.where('is_logging_attendance = ?', true).select(:id)
+    not_logging_enrollments = Enrollment.where('student_id = ? AND course_id IN (?)', session[:student_id], not_logging_ids.to_a)
+    render json: not_logging_enrollments
+  end
+
+  def delete
+    render json: {}
+  end
 end

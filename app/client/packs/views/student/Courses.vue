@@ -2,13 +2,24 @@
     <div class="app-container">
         <el-tabs v-model="activeTab">
             <el-tab-pane label="Enrollments" name="enrollments">
+				<div v-if="enrollments.length === 0" style="min-height: 60vh;" class="flex center-vertical center-horizontal">
+					<empty-state
+						src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg"
+						title="Enrollments" subtitle="You have not enrolled in any course yet." />
+				</div>
 				<div class="student-enrollments" v-for="(enrollment, index) in enrollments" :key="index">
 					<div>
 						<p>{{enrollment.course.teacher_name}}</p>
 						<p>{{enrollment.course.name}}<span>|</span>{{enrollment.course.identifier}}</p>
 					</div>
-					<div><el-button type="danger" size="medium" round>Unenroll</el-button></div>
+					<div><el-button @click="unenrollFromCourse(enrollment.id)" type="danger" size="medium" round>Unenroll</el-button></div>
 				</div>
+				<el-dialog :visible.sync="isConfirmingUnenroll">
+					<p>Are you sure you want to unenroll from this course?</p>
+					<span scope="footer">
+						<el-button type="danger" round>Yes, unenroll me</el-button>
+					</span>
+				</el-dialog>
 			</el-tab-pane>
             <el-tab-pane label="Enroll" name="enroll">
                 <p id="enroll-message">
@@ -27,14 +38,17 @@
 
 <script>
 import axios from 'axios';
+import EmptyState from '../../components/EmptyState';
 
 export default {
+	components: { EmptyState },
 	data() {
 		return {
 			activeTab: 'enrollments',
 			enrollQuery: '',
 			isEnrollingUser: false,
-			enrollments: []
+			enrollments: [],
+			isConfirmingUnenroll: false
 		};
 	},
 	methods: {
@@ -56,7 +70,7 @@ export default {
 		},
 		async enrollUser(id) {
 			try {
-				const response = await axios.post(`/enrollment/new?courseId=${id}`);
+				const response = await axios.post(`/enrollment?courseId=${id}`);
 				if (response.status === 201) {
 					this.$message({
 						message: 'Successfully enrolled in course.',
@@ -74,6 +88,9 @@ export default {
 		async getEnrollments() {
 			const response = await axios.get('/enrollment/student/all');
 			this.enrollments = response.data;
+		},
+		async unenrollFromCourse(enrollmentId) {
+			const response = await axios.delete(`/enrollment?id=${enrollmentId}`);
 		}
 	},
 	activated() {
