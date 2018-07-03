@@ -11,20 +11,20 @@
         </div>
         <el-tabs v-model="activeTab">
             <el-tab-pane label="Enrollments" name="enrollments">
-				<div id="student-enrollments" v-for="(enrollment, index) in enrollments" :key="index">
+				<div class="student-enrollments" v-for="(enrollment, index) in enrollments" :key="index">
 					<div>
 						<p>{{enrollment.course.teacher_name}}</p>
 						<p>{{enrollment.course.name}}<span>|</span>{{enrollment.course.identifier}}</p>
 					</div>
-					<div><el-button type="danger" icon="el-icon-remove" round>Unenroll</el-button></div>
+					<div><el-button type="danger" size="medium" round>Unenroll</el-button></div>
 				</div>
 			</el-tab-pane>
             <el-tab-pane label="Enroll" name="enroll">
                 <p id="enroll-message">
-                    Your teacher should provide their course's identifier which you will use to enroll 
-                    in their course below.
-                    Enrolling in a course will allow you to mark yourself present when that course's 
-                    attendance is being logged. 
+                    Your teacher should provide their course's identifier with which you can enroll 
+                    in their course.
+                    Enrolling in a course will allow you to mark yourself as present when that course's 
+                    attendance is being logged.
                 </p>
                 <el-input v-model="enrollQuery" @keyup.enter.native="findCourse" placeholder="Enter a course identifier eg: CRS-MBOR-1">
                     <el-button slot="append" @click="findCourse" :disabled="isEnrollingUser" :loading="isEnrollingUser">Enroll</el-button>
@@ -128,13 +128,17 @@ export default {
 	}
 }
 
-#student-enrollments {
+.student-enrollments:nth-child(1) {
+	padding-top: 0px;
+}
+
+.student-enrollments {
 	color: rgba(0, 0, 0, 0.54);
 	font-size: 13px;
 	border-bottom: 1px solid rgb(212, 212, 212);
 	display: flex;
 	justify-content: space-between;
-	padding: 16px;
+	padding: 16px 0px;
 
 	&:hover {
 		cursor: pointer;
