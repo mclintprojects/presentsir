@@ -1,7 +1,12 @@
 class AuthController < ApplicationController
     def get_session
         user = session[:user]
-        render json: {user: UsersSerializer.new(User.find(user["id"]))}
+        
+        if(user.present?)
+            render json: {user: UsersSerializer.new(User.find(user["id"]))}
+        else
+            render json: {user: nil}
+        end
     end
 
     def logout

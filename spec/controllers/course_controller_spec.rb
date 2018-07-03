@@ -50,7 +50,7 @@ RSpec.describe CourseController, type: :controller do
   describe "GET #update" do
     it "returns http success" do
       post :update
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
   end
 
