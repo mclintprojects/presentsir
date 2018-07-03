@@ -4,5 +4,9 @@ FactoryBot.define do
     identifier Forgery('basic').password
     course_code 'TEST-CODE'
     teacher
+
+    factory :logging_course do
+      is_logging_attendance true
+    end
   end
 end

@@ -13,9 +13,11 @@ class EnrollmentController < ApplicationController
   end
 
   def is_logging_attendance
-    not_logging_ids = Course.where('is_logging_attendance = ?', true).select(:id)
-    not_logging_enrollments = Enrollment.where('student_id = ? AND course_id IN (?)', session[:student_id], not_logging_ids.to_a)
-    render json: not_logging_enrollments
+    enrolled_courses_ids = Enrollment.where('student_id = ?', session[:student_id]).pluck(:course_id).to_a
+    logging_ids = Course.where('is_logging_attendance = ? AND id IN (?)', true, enrolled_courses_ids).select(:id).to_a
+
+    logging_enrollments = Enrollment.where('course_id IN (?)', logging_ids)
+    render json: logging_enrollments
   end
 
   def delete
