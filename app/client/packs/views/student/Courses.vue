@@ -12,12 +12,12 @@
 						<p>{{enrollment.course.teacher_name}}</p>
 						<p>{{enrollment.course.name}}<span>|</span>{{enrollment.course.identifier}}</p>
 					</div>
-					<div><el-button @click="unenrollFromCourse(enrollment.id)" type="danger" size="medium" round>Unenroll</el-button></div>
+					<div><el-button @click="confirmUnenroll(enrollment.id)" type="danger" size="medium" round>Unenroll</el-button></div>
 				</div>
-				<el-dialog :visible.sync="isConfirmingUnenroll">
+				<el-dialog title="Unenroll from course" :visible.sync="isConfirmingUnenroll">
 					<p>Are you sure you want to unenroll from this course?</p>
-					<span scope="footer">
-						<el-button type="danger" round>Yes, unenroll me</el-button>
+					<span scope="footer" class="dialog-footer">
+						<el-button @click="unenrollFromCourse" type="danger" round>Unenroll</el-button>
 					</span>
 				</el-dialog>
 			</el-tab-pane>
@@ -48,7 +48,8 @@ export default {
 			enrollQuery: '',
 			isEnrollingUser: false,
 			enrollments: [],
-			isConfirmingUnenroll: false
+			isConfirmingUnenroll: false,
+			enrollmentId: -1
 		};
 	},
 	methods: {
@@ -79,9 +80,10 @@ export default {
 				}
 
 				this.isEnrollingUser = false;
+				this.enrollQuery = '';
 				this.getEnrollments();
 			} catch (err) {
-				this.$message.error(err.response.data.errors[0]);
+				this.$message.error(`${err.response.data.errors[0]}.`);
 				this.isEnrollingUser = false;
 			}
 		},
@@ -89,8 +91,29 @@ export default {
 			const response = await axios.get('/enrollment/student/all');
 			this.enrollments = response.data;
 		},
-		async unenrollFromCourse(enrollmentId) {
-			const response = await axios.delete(`/enrollment?id=${enrollmentId}`);
+		async unenrollFromCourse() {
+			try {
+				const response = await axios.delete(
+					`/enrollment?id=${this.enrollmentId}`
+				);
+
+				if (response.status === 200) {
+					this.$message({
+						message: 'Successfully unenrolled from course.',
+						type: 'success'
+					});
+					this.getEnrollments();
+				}
+
+				this.isConfirmingUnenroll = false;
+			} catch (err) {
+				this.$message.error('Something went wrong while unenrolling you.');
+				this.isConfirmingUnenroll = false;
+			}
+		},
+		confirmUnenroll(enrollmentId) {
+			this.isConfirmingUnenroll = true;
+			this.enrollmentId = enrollmentId;
 		}
 	},
 	activated() {

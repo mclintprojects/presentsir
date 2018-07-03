@@ -25,6 +25,7 @@ class EnrollmentController < ApplicationController
   end
 
   def delete
-    render json: {}
+    Enrollment.find(params[:id]).destroy
+    render json: {}, status: 200
   end
 end
