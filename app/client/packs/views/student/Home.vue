@@ -9,10 +9,6 @@
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" />
                 <p>Courses</p>
             </div>
-            <div class="main-menu-item hidden">
-                <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445995/present-sir/twotone-settings-24px.svg" />
-                <p>Settings</p>
-            </div>
             <div class="main-menu-item" @click="logoutUser">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530450965/present-sir/twotone-exit_to_app-24px.svg" />
                 <p>Logout</p>

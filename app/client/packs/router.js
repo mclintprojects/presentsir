@@ -11,6 +11,7 @@ import LogAttendance from './views/student/LogAttendance';
 import TeacherHome from './views/teacher/Home';
 import TeacherDashboard from './views/teacher/Dashboard';
 import TeacherCourses from './views/teacher/Courses';
+import Attendance from './views/teacher/Attendance';
 import CourseDetail from './views/teacher/CourseDetail';
 
 Vue.use(Router);
@@ -62,6 +63,11 @@ const router = new Router({
 					path: 'courses/:id',
 					name: 'course-detail',
 					component: CourseDetail
+				},
+				{
+					path: 'attendance',
+					name: 'attendance',
+					component: Attendance
 				}
 			],
 			async beforeEnter(to, from, next) {

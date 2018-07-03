@@ -9,13 +9,9 @@
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" />
                 <p>Courses</p>
             </div>
-            <div class="main-menu-item">
+            <div @click="navigateTo('attendance')" :class="{highlight: shouldHighlight('attendance')}" class="main-menu-item">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445880/present-sir/twotone-school-24px.svg" />
                 <p>Attendance</p>
-            </div>
-            <div class="main-menu-item hidden">
-                <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445995/present-sir/twotone-settings-24px.svg" />
-                <p>Settings</p>
             </div>
             <div class="main-menu-item" @click="logoutUser">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530450965/present-sir/twotone-exit_to_app-24px.svg" />
@@ -34,7 +30,7 @@
 import Navbar from '../../components/Navbar';
 import eventbus from '../../eventbus';
 
-const TOP_LEVEL_ROUTES = ['teacher-dashboard', 'teacher-courses'];
+const TOP_LEVEL_ROUTES = ['teacher-dashboard', 'teacher-courses', 'attendance'];
 export default {
 	components: { Navbar },
 	data() {
