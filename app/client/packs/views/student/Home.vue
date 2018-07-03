@@ -1,13 +1,13 @@
 <template>
     <div>
         <navbar>
+            <div @click="navigateTo('log-attendance')" class="main-menu-item" :class="{highlight: shouldHighlight('log-attendance')}">
+                <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445880/present-sir/twotone-assignment-24px.svg" />
+                <p>Log attendance</p>
+            </div>
             <div @click="navigateTo('student-courses')" class="main-menu-item" :class="{highlight: shouldHighlight('student-courses')}">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" />
                 <p>Courses</p>
-            </div>
-            <div class="main-menu-item">
-                <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445880/present-sir/twotone-school-24px.svg" />
-                <p>Attendance</p>
             </div>
             <div class="main-menu-item hidden">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445995/present-sir/twotone-settings-24px.svg" />
@@ -30,13 +30,13 @@
 import Navbar from '../../components/Navbar';
 import eventbus from '../../eventbus';
 
-const TOP_LEVEL_ROUTES = ['student-dashboard', 'student-courses'];
+const TOP_LEVEL_ROUTES = ['log-attendance', 'student-courses'];
 export default {
 	components: { Navbar },
 	data() {
 		return {
 			collapsed: true,
-			selectedComponent: 'student-dashboard'
+			selectedComponent: 'log-attendance'
 		};
 	},
 	computed: {},
@@ -66,7 +66,7 @@ export default {
 	created() {
 		this.highlight(this.$route);
 		if (this.$route.path === '/student')
-			this.$router.push({ name: 'student-courses' });
+			this.$router.push({ name: 'log-attendance' });
 		this.$store.dispatch('setUser');
 
 		eventbus.$on(

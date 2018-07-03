@@ -1,14 +1,5 @@
 <template>
     <div class="app-container">
-        <div v-if="logging_courses.length > 0" style="margin-bottomL 16px;">
-            <p style="color: rgba(0, 0, 0, 0.54)">Courses currently logging attendance</p>
-            <ul id="logging-courses" class="flex">
-                <li class="shadow" v-for="(logging_course, index) in logging_courses" :key="index">
-                    <p>{{logging_course.name}}</p>
-                    <p>{{logging_course.course_code}}</p>
-                </li>
-            </ul>
-        </div>
         <el-tabs v-model="activeTab">
             <el-tab-pane label="Enrollments" name="enrollments">
 				<div class="student-enrollments" v-for="(enrollment, index) in enrollments" :key="index">
@@ -40,7 +31,6 @@ import axios from 'axios';
 export default {
 	data() {
 		return {
-			logging_courses: [],
 			activeTab: 'enrollments',
 			enrollQuery: '',
 			isEnrollingUser: false,
