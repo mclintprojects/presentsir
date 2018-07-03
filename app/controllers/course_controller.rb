@@ -29,6 +29,15 @@ class CourseController < ApplicationController
     render json: data, each_serializer: CourseSerializer, status: 200, meta: pagination, adapter: :json
   end
 
+  def mark_attendance
+    if(session[:teacher_id].present?)
+      Course.find(params[:id]).update_attributes(is_logging_attendance: params[:state])
+      render json: {}, status: 200
+    else
+      render json: {}, status: 403
+    end
+  end
+
   def new
     teacher_id = session[:teacher_id]
     course = Course.new(course_params)

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'course/all'
   get 'course/search'
   post 'course', to: 'course#new'
+  post 'course/mark_attendance'
   put 'course', to: 'course#update'
   delete 'course', to: 'course#delete'
 

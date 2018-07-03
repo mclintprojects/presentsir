@@ -2,7 +2,7 @@
     <div class="app-container">
         <el-row :gutter="32">
             <el-col :sm="24" :lg="20">
-                <el-input v-model="query" placeholder="Search for a class" size="medium" />
+                <el-input v-model="query" placeholder="Search for a course" size="medium" />
             </el-col>
             <el-col :sm="24" :lg="4">
                 <el-button @click="showAddCourseDialog = true" id="add-class-btn" type="danger" size="medium" icon="el-icon-plus" round>Add course</el-button>
@@ -19,9 +19,9 @@
 		<div class="flex center-horizontal" style="margin-top: 16px;">
 			<el-pagination background layout="pager" :total="pagination.total_count" :page-size="30" @current-change="currentPageChanged" />
 		</div>
-        <el-dialog title="Add a new class" :visible.sync="showAddCourseDialog" :before-close="dialogClosing">
+        <el-dialog title="Add a new course" :visible.sync="showAddCourseDialog" :before-close="dialogClosing">
             <label>Name</label>
-            <el-input class="input" v-model="formData.name" placeholder="Enter the name of the clouse" />
+            <el-input class="input" v-model="formData.name" placeholder="Enter the name of the course" />
 
             <label>Course code (optional)</label>
             <el-input class="input" v-model="formData.course_code" placeholder="Enter the course code eg: IT 304" />

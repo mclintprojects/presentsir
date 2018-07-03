@@ -16,6 +16,7 @@ gem 'pg'
 gem 'bcrypt'
 gem 'active_model_serializers'
 gem 'kaminari'
+gem 'pusher'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

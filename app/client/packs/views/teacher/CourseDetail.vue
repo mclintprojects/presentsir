@@ -10,6 +10,15 @@
                 <el-button @click="showDeleteConfirmation = true" id="delete-course-btn" type="danger" icon="el-icon-delete" size="small" round>Delete course</el-button>
             </el-col>
         </el-row>
+		<div class="flex" style="margin-top: 16px;">
+			<el-button :loading="isChangingAttendanceState" :disabled="isChangingAttendanceState" 
+			@click="markAttendance(true)" v-if="!course.is_logging_attendance" icon="el-icon-tickets"
+			 size="small" round>Start marking attendance</el-button>
+
+			<el-button :loading="isChangingAttendanceState" :disabled="isChangingAttendanceState"
+			 @click="markAttendance(false)" v-if="course.is_logging_attendance" type="danger"
+			  icon="el-icon-circle-close-outline" size="small" round>End attendance marking</el-button>
+		</div>
         <el-tabs style="margin-top: 16px" v-model="activeTab">
             <el-tab-pane label="Enrollments" name="enrollments">
                 <p id="course-enrollments-count"><span>{{course.enrollments}}</span> 
@@ -46,7 +55,8 @@ export default {
 			activeTab: 'enrollments',
 			showDeleteConfirmation: false,
 			isDeletingCourse: false,
-			enrollments: []
+			enrollments: [],
+			isChangingAttendanceState: false
 		};
 	},
 	methods: {
@@ -71,6 +81,25 @@ export default {
 				`/enrollment/course/all?courseId=${this.$route.params.id}`
 			);
 			this.enrollments = response.data;
+		},
+		async markAttendance(state) {
+			this.isChangingAttendanceState = true;
+			const response = await axios.post(
+				`/course/mark_attendance?id=${this.course.id}&state=${state}`
+			);
+
+			if (response.status === 200) {
+				this.course.is_logging_attendance = state;
+				const message = state
+					? 'Students enrolled in this course can now mark themselves as present.'
+					: 'Attendance marking session ended.';
+
+				this.$message({
+					message,
+					type: 'success'
+				});
+			}
+			this.isChangingAttendanceState = false;
 		}
 	},
 	async activated() {

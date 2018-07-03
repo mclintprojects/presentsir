@@ -1,5 +1,5 @@
 class CourseSerializer < ActiveModel::Serializer
-    attributes :id, :name, :identifier, :course_code, :course_reps, :teacher_name, :enrollments
+    attributes :id, :name, :identifier, :course_code, :is_logging_attendance, :course_reps, :teacher_name, :enrollments
 
     has_many :course_reps, serializer: CourseRepSerializer
 
