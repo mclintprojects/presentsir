@@ -1,6 +1,5 @@
 class CourseRepSerializer < ActiveModel::Serializer
-    attributes :id, :student, :course
+    attributes :id, :student
 
     has_one :student, serializer: StudentSerializer
-    has_one :course, serializer: CourseSerializer
 end

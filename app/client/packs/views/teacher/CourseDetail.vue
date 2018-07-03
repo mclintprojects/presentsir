@@ -24,7 +24,7 @@
 				{{course.enrollments === 1 ? 'student' : 'students'}} {{course.enrollments === 1 ? 'has' : 'have'}} enrolled in this course.</p>
 				<ul id="course-enrollments-list">
 					<li v-for="(enrollment, index) in enrollments" :key="index">
-						<p>{{enrollment.student_name}}</p>
+						<p>{{enrollment.student.name}}</p>
 						<p>Enrolled on: {{getDateString(enrollment.created_at)}}</p>
 					</li>
 				</ul>
@@ -35,9 +35,12 @@
 				</el-input>
 
 				<ul id="course-reps-list">
-					<li v-for="(rep, index) in course.course_reps" :key="index">
-						<p>{{rep.student.name}}</p>
-						<p>{{rep.student.email}}</p>
+					<li class="flex center-vertical" v-for="(rep, index) in course.course_reps" :key="index">
+						<div>
+							<p>{{rep.student.name}}</p>
+							<p>{{rep.student.email}}</p>
+						</div>
+						<el-button @click="removeClassRep(rep.id, index)" type="danger" round>Unassign</el-button>
 					</li>
 				</ul>
                 
@@ -155,9 +158,20 @@ export default {
 
 				this.course.course_reps.push(response.data);
 				this.isAddingCourseRep = false;
+				this.courseRepEmail = '';
 			} catch (err) {
-				this.$message.error('Failed to assign as course rep. Please retry.');
+				this.$message.error('Failed to assign as course rep.');
 				this.isAddingCourseRep = false;
+			}
+		},
+		async removeClassRep(id, index) {
+			const response = await axios.delete(`/course_rep?id=${id}`);
+			if (response.status === 200) {
+				this.course.course_reps.splice(index, 1);
+				this.$message({
+					message: 'Successfully unassigned student as course rep.',
+					type: 'success'
+				});
 			}
 		}
 	},
@@ -207,10 +221,12 @@ $text-color-light: rgba(0, 0, 0, 0.54);
 	}
 }
 
-#course-enrollments-list {
+#course-enrollments-list,
+#course-reps-list {
 	li {
 		border-bottom: 1px solid rgb(212, 212, 212);
 		padding: 16px 0px;
+		justify-content: space-between;
 
 		p:nth-child(1) {
 			color: rgba(0, 0, 0, 0.8);
@@ -226,6 +242,10 @@ $text-color-light: rgba(0, 0, 0, 0.54);
 			}
 		}
 	}
+}
+
+#course-detail-actions {
+	justify-content: flex-end;
 }
 
 @media screen and (max-width: 567px) {

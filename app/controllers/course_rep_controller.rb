@@ -1,7 +1,7 @@
 class CourseRepController < ApplicationController
     def new
         if(session[:teacher_id].present?)
-            student = Student.find_by(user_id: User.find_by(email: params[email]))
+            student = Student.find_by(user_id: User.find_by(email: params[:email]))
             course_rep = CourseRep.new(student_id: student.id, course_id: params[:courseId])
 
             if(course_rep.save)
@@ -9,6 +9,16 @@ class CourseRepController < ApplicationController
             else
                 render json: {errors: course_rep.errors.full_messages}, status: 422
             end
+        else
+            render json: {}, status: 403
+        end
+    end
+
+    def delete
+        course_rep = CourseRep.find(params[:id])
+        if(session[:teacher_id] == course_rep.course.teacher_id)
+            course_rep.destroy
+            render json: {}, status: 200
         else
             render json: {}, status: 403
         end
