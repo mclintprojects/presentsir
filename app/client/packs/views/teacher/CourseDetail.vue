@@ -33,7 +33,11 @@
 				<el-input v-model="courseRepEmail" placeholder="Enter a course rep's email">
 					<el-button slot="append" @click="addCourseRep">Add as course rep</el-button>
 				</el-input>
-
+				<div v-if="course.course_reps.length === 0" style="min-height: 60vh;" class="flex center-vertical center-horizontal">
+					<empty-state
+						src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530649206/present-sir/twotone-supervisor_account-24px.svg"
+						title="Course reps" subtitle="You have not assigned any course rep to this course yet." />
+				</div>
 				<ul id="course-reps-list">
 					<li class="flex center-vertical" v-for="(rep, index) in course.course_reps" :key="index">
 						<div>
@@ -43,7 +47,6 @@
 						<el-button @click="removeClassRep(rep.id, index)" type="danger" round>Unassign</el-button>
 					</li>
 				</ul>
-                
             </el-tab-pane>
         </el-tabs>
 		<el-dialog :visible.sync="showDeleteConfirmation">
@@ -58,12 +61,14 @@
 
 <script>
 import axios from 'axios';
+import EmptyState from '../../components/EmptyState';
 import eventbus from '../../eventbus';
 
 export default {
+	components: { EmptyState },
 	data() {
 		return {
-			course: {},
+			course: { course_reps: [] },
 			activeTab: 'enrollments',
 			showDeleteConfirmation: false,
 			isDeletingCourse: false,
