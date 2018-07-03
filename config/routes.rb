@@ -19,5 +19,7 @@ Rails.application.routes.draw do
   post 'enrollment', to: 'enrollment#new'
   delete 'enrollment', to: 'enrollment#delete'
 
+  post 'attendance/new'
+
   match "*path", to: "home#index", format: false, via: :get
 end

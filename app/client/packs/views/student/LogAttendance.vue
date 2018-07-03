@@ -15,7 +15,7 @@
                         <p>{{logging_enrollment.course.course_code}}</p>
                     </div>
                     <div class="flex center-horizontal" style="margin-top: 16px"> 
-                        <el-button type="success" icon="el-icon-check" round>Mark me as present</el-button>
+                        <el-button :loading="isMarkingAsPresent" :disabled="isMarkingAsPresent" @click="markAsPresent(logging_enrollment.course.id)" type="success" icon="el-icon-check" round>Mark me as present</el-button>
                     </div>
                 </li>
             </ul>
@@ -31,13 +31,32 @@ export default {
 	components: { EmptyState },
 	data() {
 		return {
-			logging_enrollments: []
+			logging_enrollments: [],
+			isMarkingAsPresent: false
 		};
 	},
 	methods: {
 		async getLoggingEnrollments() {
 			const response = await axios.get('/enrollment/is_logging_attendance');
 			this.logging_enrollments = response.data;
+		},
+		async markAsPresent(courseId) {
+			try {
+				this.isMarkingAsPresent = true;
+				const response = await axios.post(
+					`/attendance/new?courseId=${courseId}`
+				);
+				this.$message({
+					message: 'You have successfully marked yourself as present.',
+					type: 'success'
+				});
+
+				this.isMarkingAsPresent = false;
+				this.getLoggingEnrollments();
+			} catch (err) {
+				this.isMarkingAsPresent = false;
+				this.$message.error(err.response.data.errors[0]);
+			}
 		}
 	},
 	activated() {

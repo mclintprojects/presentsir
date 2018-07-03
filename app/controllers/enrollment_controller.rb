@@ -14,8 +14,12 @@ class EnrollmentController < ApplicationController
 
   def is_logging_attendance
     enrolled_courses_ids = Enrollment.where('student_id = ?', session[:student_id]).pluck(:course_id).to_a
-    logging_ids = Course.where('is_logging_attendance = ? AND id IN (?)', true, enrolled_courses_ids).select(:id).to_a
+    attended_ids = Attendance.where('student_id = ? AND created_at >= ?',
+       session[:student_id], Time.zone.now.beginning_of_day).pluck(:course_id).to_a
 
+    logging_ids = Course.where('is_logging_attendance = ? AND (id IN (?) AND id NOT IN (?))',
+     true, enrolled_courses_ids, attended_ids+[0]).select(:id).to_a
+    
     logging_enrollments = Enrollment.where('course_id IN (?)', logging_ids)
     render json: logging_enrollments
   end

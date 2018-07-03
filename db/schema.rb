@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_03_073538) do
+ActiveRecord::Schema.define(version: 2018_07_03_113109) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer "student_id"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 2018_07_03_073538) do
     t.integer "teacher_id"
     t.string "course_code"
     t.boolean "is_logging_attendance", default: false
+    t.index ["is_logging_attendance"], name: "index_courses_on_is_logging_attendance"
+    t.index ["teacher_id"], name: "index_courses_on_teacher_id"
   end
 
   create_table "enrollments", force: :cascade do |t|
@@ -41,6 +43,8 @@ ActiveRecord::Schema.define(version: 2018_07_03_073538) do
     t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_enrollments_on_course_id"
+    t.index ["student_id"], name: "index_enrollments_on_student_id"
   end
 
   create_table "students", force: :cascade do |t|
