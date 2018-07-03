@@ -9,13 +9,16 @@
                     <el-button @click="getAttendances" slot="append" :loading="isGettingAttendances" :disabled="isGettingAttendances">View</el-button>
                 </el-input>
             </el-col>
+            <el-col :span="24" style="margin-top: 16px">
+                <el-input v-model="query" placeholder="Search for a student" />
+            </el-col>
         </el-row>
         <ul id="attendances" v-if="attendances.length > 0">
             <p id="viewing-attendance-label">
                 Viewing ({{attendances.length}}) {{attendances.length === 1 ? 'attendance' : 'attendances'}}
                 for <span>{{attendances[0].course.name}}</span> on <span>{{getDateString()}}</span>
             </p>
-            <li v-for="(attendance, index) in attendances" :key="index">
+            <li v-for="(attendance, index) in filtered_attendances" :key="index">
                 <p>{{attendance.student.name}}</p>
                 <p>{{attendance.student.email}}</p>
             </li>
@@ -40,8 +43,19 @@ export default {
 			date: '',
 			identifier: '',
 			attendances: [],
-			isGettingAttendances: false
+			isGettingAttendances: false,
+			query: ''
 		};
+	},
+	computed: {
+		filtered_attendances() {
+			return this.attendances.filter(attendance => {
+				return (
+					attendance.student.name.includesInvariant(this.query) ||
+					attendance.student.email.includesInvariant(this.query)
+				);
+			});
+		}
 	},
 	methods: {
 		async getAttendances() {

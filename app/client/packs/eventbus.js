@@ -20,9 +20,9 @@ const eventbus = new Vue({
 	methods: {
 		getDate(dateString = '') {
 			const date = dateString.length == 0 ? new Date() : new Date(dateString);
-			return `${date.getDate()} ${
+			return `${
 				this.months[date.getMonth()]
-			}, ${date.getFullYear()}`;
+			} ${date.getDate()}, ${date.getFullYear()}`;
 		}
 	}
 });

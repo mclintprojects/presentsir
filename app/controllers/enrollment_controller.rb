@@ -25,8 +25,8 @@ class EnrollmentController < ApplicationController
 
     logging_ids = Course.where('is_logging_attendance = ? AND (id IN (?) AND id NOT IN (?))',
      true, enrolled_courses_ids, attended_ids+[0]).select(:id).to_a
-    
-    logging_enrollments = Enrollment.where('course_id IN (?)', logging_ids)
+
+    logging_enrollments = Enrollment.where('course_id IN (?) AND student_id = ?', logging_ids, session[:student_id])
     render json: logging_enrollments
   end
 

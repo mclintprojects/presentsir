@@ -147,6 +147,7 @@ export default {
 						const index = this.enrollments.findIndex(
 							enrollment => enrollment.id === data.enrollment_id
 						);
+
 						this.enrollments.splice(index, 1);
 						this.course.enrollments--;
 					}
