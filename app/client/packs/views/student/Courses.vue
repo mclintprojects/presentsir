@@ -62,7 +62,6 @@ export default {
 
 				this.enrollUser(response.data.id);
 			} catch (err) {
-				console.log(err);
 				this.$message.error(
 					`Could not find a course with identifier '${this.enrollQuery}'.`
 				);

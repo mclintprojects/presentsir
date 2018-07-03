@@ -31,8 +31,11 @@ class CourseController < ApplicationController
 
   def mark_attendance
     if(session[:teacher_id].present?)
-      Course.find(params[:id]).update_attributes(is_logging_attendance: params[:state])
+      course = Course.find(params[:id])
+      course.update_attributes(is_logging_attendance: params[:state])
       render json: {}, status: 200
+
+      Pusher.trigger('course', 'mark_attendance', {state: course.is_logging_attendance, id: course.id}.as_json)
     else
       render json: {}, status: 403
     end

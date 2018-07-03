@@ -100,6 +100,16 @@ export default {
 				});
 			}
 			this.isChangingAttendanceState = false;
+		},
+		subscribe() {
+			const channel = this.$pusher.subscribe('course');
+			channel.bind(
+				'mark_attendance',
+				function(data) {
+					if (data.id === this.course.id)
+						this.course.is_logging_attendance = data.state;
+				}.bind(this)
+			);
 		}
 	},
 	async activated() {
@@ -115,6 +125,10 @@ export default {
 		}
 
 		this.getEnrollments();
+		this.subscribe();
+	},
+	deactivated() {
+		this.$pusher.unsuscribe('course');
 	}
 };
 </script>
