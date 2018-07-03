@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   delete 'enrollment', to: 'enrollment#delete'
 
   post 'attendance/new'
+  get 'attendance', to: 'attendance#search'
 
   post 'course_rep', to: 'course_rep#new'
   delete 'course_rep', to: 'course_rep#delete'

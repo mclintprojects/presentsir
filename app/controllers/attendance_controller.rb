@@ -12,4 +12,11 @@ class AttendanceController < ApplicationController
       render json: {errors: ['This course is not currently taking attendance']}, status: 403
     end
   end
+
+  def search
+    date = Date.parse(params[:date])
+    render json: Attendance.where('created_at >= ? AND created_at <= ? AND course_id = ?',
+      date, date + 1.days, Course.find_by(identifier: params[:identifier]).id),
+      each_serializer: AttendanceSerializer, status: 200
+  end
 end

@@ -72,7 +72,6 @@ export default {
 		background: white;
 		border-radius: 10px;
 		padding: 16px;
-		width: 20%;
 		margin-right: 16px;
 		margin-bottom: 16px;
 
@@ -96,10 +95,7 @@ export default {
 	#logging-courses {
 		li {
 			margin-right: 0px;
-		}
-
-		li {
-			width: calc(100%);
+			width: 100%;
 		}
 	}
 }
