@@ -197,7 +197,7 @@ export default {
 		this.subscribe();
 	},
 	deactivated() {
-		this.$pusher.unsuscribe('present-sir');
+		this.$pusher.unsubscribe('present-sir');
 	}
 };
 </script>
