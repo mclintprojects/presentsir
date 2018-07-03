@@ -12,8 +12,14 @@
         </el-row>
         <el-tabs style="margin-top: 16px" v-model="activeTab">
             <el-tab-pane label="Enrollments" name="enrollments">
-                <p id="course-enrollments-count"><span>{{course.enrollments}}</span> students have enrolled in this course.</p>
-
+                <p id="course-enrollments-count"><span>{{course.enrollments}}</span> 
+				{{course.enrollments === 1 ? 'student' : 'students'}} {{course.enrollments === 1 ? 'has' : 'have'}} enrolled in this course.</p>
+				<ul id="course-enrollments-list">
+					<li v-for="(enrollment, index) in enrollments" :key="index">
+						<p>{{enrollment.student_name}}</p>
+						<p>Enrolled on: {{getDateString(enrollment.created_at)}}</p>
+					</li>
+				</ul>
             </el-tab-pane>
             <el-tab-pane label="Course reps" name="course-reps">
                 
@@ -39,7 +45,8 @@ export default {
 			course: {},
 			activeTab: 'enrollments',
 			showDeleteConfirmation: false,
-			isDeletingCourse: false
+			isDeletingCourse: false,
+			enrollments: []
 		};
 	},
 	methods: {
@@ -55,6 +62,15 @@ export default {
 				this.$message.error(err.response.data.errors[0]);
 				this.isDeletingCourse = false;
 			}
+		},
+		getDateString(date) {
+			return eventbus.getDate(date);
+		},
+		async getEnrollments() {
+			const response = await axios.get(
+				`/enrollment/course/all?courseId=${this.$route.params.id}`
+			);
+			this.enrollments = response.data;
 		}
 	},
 	async activated() {
@@ -68,6 +84,8 @@ export default {
 			const response = await axios.get(`/course/search?id=${id}`);
 			this.course = response.data;
 		}
+
+		this.getEnrollments();
 	}
 };
 </script>
@@ -94,6 +112,26 @@ $text-color-light: rgba(0, 0, 0, 0.54);
 	span {
 		font-size: 20px;
 		color: $text-color;
+	}
+}
+
+#course-enrollments-list {
+	li {
+		border-bottom: 1px solid rgb(212, 212, 212);
+		padding: 16px 0px;
+
+		p:nth-child(1) {
+			color: rgba(0, 0, 0, 0.8);
+		}
+
+		p:nth-child(2) {
+			color: rgba(0, 0, 0, 0.54);
+			font-size: 11px;
+
+			span {
+				text-transform: uppercase;
+			}
+		}
 	}
 }
 

@@ -18,8 +18,8 @@ const eventbus = new Vue({
 		]
 	},
 	methods: {
-		getDate() {
-			const date = new Date();
+		getDate(dateString = '') {
+			const date = dateString.length == 0 ? new Date() : new Date(dateString);
 			return `${date.getDate()} ${
 				this.months[date.getMonth()]
 			}, ${date.getFullYear()}`;

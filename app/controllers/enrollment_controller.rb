@@ -1,6 +1,10 @@
 class EnrollmentController < ApplicationController
-  def all_student
+  def all_student #all enrollments a user made
     render json: Enrollment.where('student_id = ?', session[:student_id]), each_serializer: EnrollmentSerializer
+  end
+
+  def all_course #all enrollments a course has
+    render json: Enrollment.where('course_id = ?', params[:courseId]), each_serializer: EnrollmentSerializer
   end
   
   def new
