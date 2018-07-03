@@ -41,8 +41,6 @@ RSpec.describe CourseController, type: :controller do
       session[:user] = user
       session[:teacher_id] = teacher.id
 
-      before_count = Course.all.count
-
       post :new, params: {course: {name: 'Test', course_code: 'TEST 302'}}
       post :new, params: {course: {name: 'Test', course_code: 'TEST 302'}}
       expect(response).to have_http_status(422)

@@ -106,35 +106,6 @@ export default {
 	margin-bottom: 16px;
 }
 
-#logging-courses {
-	margin-top: 8px;
-	justify-content: space-between;
-
-	li {
-		background: white;
-		border-radius: 10px;
-		padding: 16px;
-		width: 20%;
-		margin-right: 16px;
-		margin-bottom: 16px;
-
-		p:nth-child(1) {
-			font-size: 18px;
-		}
-
-		p:nth-child(2) {
-			font-size: 10px;
-			text-transform: uppercase;
-			color: rgba(0, 0, 0, 0.54);
-		}
-
-		&:hover {
-			cursor: pointer;
-			background: hsl(210, 29%, 89%);
-		}
-	}
-}
-
 .student-enrollments:nth-child(1) {
 	padding-top: 0px;
 }
@@ -160,18 +131,6 @@ export default {
 		span:nth-child(1) {
 			margin: 0px 8px;
 			color: rgb(212, 212, 212);
-		}
-	}
-}
-
-@media screen and (max-width: 567px) {
-	#logging-courses {
-		li:nth-child(even) {
-			margin-right: 0px;
-		}
-
-		li {
-			width: calc(50% - 48px);
 		}
 	}
 }
