@@ -21,7 +21,7 @@ RSpec.describe CourseController, type: :controller do
   end
 
   describe "POST #new" do
-    it "returns http success" do
+    it "will create a new course" do
       user = create(:user)
       teacher = Teacher.create(user_id: user.id)
       session[:user] = user
@@ -33,6 +33,19 @@ RSpec.describe CourseController, type: :controller do
       expect(JSON.parse(response.body)["identifier"]).to eq("CRS-#{user.last_name.first(2).upcase}#{user.first_name.last(2).upcase}-1")
       expect(Course.all.count).to eq(before_count + 1)
       expect(response).to have_http_status(201)
+    end
+
+    it "will not create a new course if existing course code + name exists" do
+      user = create(:user)
+      teacher = Teacher.create(user_id: user.id)
+      session[:user] = user
+      session[:teacher_id] = teacher.id
+
+      before_count = Course.all.count
+
+      post :new, params: {course: {name: 'Test', course_code: 'TEST 302'}}
+      post :new, params: {course: {name: 'Test', course_code: 'TEST 302'}}
+      expect(response).to have_http_status(422)
     end
   end
 
