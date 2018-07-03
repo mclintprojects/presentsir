@@ -30,8 +30,8 @@ class CourseController < ApplicationController
   end
 
   def mark_attendance
-    if(session[:teacher_id].present?)
-      course = Course.find(params[:id])
+    course = Course.find(params[:id])
+    if(session[:teacher_id].present? || CourseRep.find_by(student_id: session[:student_id]))
       course.update_attributes(is_logging_attendance: params[:state])
       render json: {}, status: 200
 
