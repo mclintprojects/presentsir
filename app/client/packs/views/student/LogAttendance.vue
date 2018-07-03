@@ -43,9 +43,7 @@ export default {
 		async markAsPresent(courseId) {
 			try {
 				this.isMarkingAsPresent = true;
-				const response = await axios.post(
-					`/attendance/new?courseId=${courseId}`
-				);
+				const response = await axios.post(`/attendance/new`, { courseId });
 				this.$message({
 					message: 'You have successfully marked yourself as present.',
 					type: 'success'

@@ -23,5 +23,7 @@ Rails.application.routes.draw do
 
   post 'attendance/new'
 
+  post 'course_rep', to: 'course_rep#new'
+
   match "*path", to: "home#index", format: false, via: :get
 end

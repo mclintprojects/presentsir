@@ -6,7 +6,7 @@ class CourseController < ApplicationController
     elsif (params[:identifier].present?)
       course = Course.find_by(identifier: params[:identifier])
     end
-    
+
     if(course.present?)
       render json: course, serializer: CourseSerializer
     else
@@ -35,7 +35,7 @@ class CourseController < ApplicationController
       course.update_attributes(is_logging_attendance: params[:state])
       render json: {}, status: 200
 
-      Pusher.trigger('course', 'mark_attendance', {state: course.is_logging_attendance, id: course.id}.as_json)
+      Pusher.trigger('present-sir', 'mark_attendance', {state: course.is_logging_attendance, id: course.id}.as_json)
     else
       render json: {}, status: 403
     end

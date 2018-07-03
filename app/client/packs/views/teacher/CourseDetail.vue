@@ -1,12 +1,11 @@
 <template>
     <div class="app-container">
         <el-row>
-            <el-col :sm="24" :lg="16">
+            <el-col :xs="24" :sm="16" :lg="16">
                 <p id="course-name">{{course.name}}</p>
                 <p id="course-subdetails">{{course.course_code}} <span :class="{hidden:!course.course_code}">|</span> Identifier: <span>{{course.identifier}}</span></p>
             </el-col>
-            <el-col :sm="24" :lg="8" class="flex center-horizontal" id="course-detail-actions">
-                <el-button type="success" icon="el-icon-plus" size="small" round>Add a course rep</el-button>
+            <el-col :xs="24" :sm="8" :lg="8" class="flex center-horizontal" id="course-detail-actions">
                 <el-button @click="showDeleteConfirmation = true" id="delete-course-btn" type="danger" icon="el-icon-delete" size="small" round>Delete course</el-button>
             </el-col>
         </el-row>
@@ -31,12 +30,22 @@
 				</ul>
             </el-tab-pane>
             <el-tab-pane label="Course reps" name="course-reps">
+				<el-input v-model="courseRepEmail" placeholder="Enter a course rep's email">
+					<el-button slot="append" @click="addCourseRep">Add as course rep</el-button>
+				</el-input>
+
+				<ul id="course-reps-list">
+					<li v-for="(rep, index) in course.course_reps" :key="index">
+						<p>{{rep.student.name}}</p>
+						<p>{{rep.student.email}}</p>
+					</li>
+				</ul>
                 
             </el-tab-pane>
         </el-tabs>
 		<el-dialog :visible.sync="showDeleteConfirmation">
 			<p>Are you sure you want to delete this course?</p>
-			<span slot="footer" class="dialog-footer">
+			<span slot="footer">
 				<el-button @click="showDeleteConfirmation = false" round>Cancel</el-button>
 				<el-button type="danger" @click="deleteCourse" :loading="isDeletingCourse" round>Delete</el-button>
 			</span>
@@ -56,7 +65,8 @@ export default {
 			showDeleteConfirmation: false,
 			isDeletingCourse: false,
 			enrollments: [],
-			isChangingAttendanceState: false
+			isChangingAttendanceState: false,
+			courseRepEmail: ''
 		};
 	},
 	methods: {
@@ -84,9 +94,10 @@ export default {
 		},
 		async markAttendance(state) {
 			this.isChangingAttendanceState = true;
-			const response = await axios.post(
-				`/course/mark_attendance?id=${this.course.id}&state=${state}`
-			);
+			const response = await axios.post(`/course/mark_attendance`, {
+				id: this.course.id,
+				state: state
+			});
 
 			if (response.status === 200) {
 				this.course.is_logging_attendance = state;
@@ -102,7 +113,7 @@ export default {
 			this.isChangingAttendanceState = false;
 		},
 		subscribe() {
-			const channel = this.$pusher.subscribe('course');
+			const channel = this.$pusher.subscribe('present-sir');
 			channel.bind(
 				'mark_attendance',
 				function(data) {
@@ -110,6 +121,44 @@ export default {
 						this.course.is_logging_attendance = data.state;
 				}.bind(this)
 			);
+
+			channel.bind(
+				'course-enroll',
+				function(data) {
+					if (data.course_id === this.course.id) {
+						this.enrollments.push(data.enrollment);
+						this.course.enrollments++;
+					}
+				}.bind(this)
+			);
+
+			channel.bind(
+				'course-unenroll',
+				function(data) {
+					if (data.course_id === this.course.id) {
+						const index = this.enrollments.findIndex(
+							enrollment => enrollment.id === data.enrollment_id
+						);
+						this.enrollments.splice(index, 1);
+						this.course.enrollments--;
+					}
+				}.bind(this)
+			);
+		},
+		async addCourseRep() {
+			try {
+				this.isAddingCourseRep = true;
+				const response = await axios.post('/course_rep', {
+					courseId: this.course.id,
+					email: this.courseRepEmail
+				});
+
+				this.course.course_reps.push(response.data);
+				this.isAddingCourseRep = false;
+			} catch (err) {
+				this.$message.error('Failed to assign as course rep. Please retry.');
+				this.isAddingCourseRep = false;
+			}
 		}
 	},
 	async activated() {
@@ -128,7 +177,7 @@ export default {
 		this.subscribe();
 	},
 	deactivated() {
-		this.$pusher.unsuscribe('course');
+		this.$pusher.unsuscribe('present-sir');
 	}
 };
 </script>
@@ -165,11 +214,12 @@ $text-color-light: rgba(0, 0, 0, 0.54);
 
 		p:nth-child(1) {
 			color: rgba(0, 0, 0, 0.8);
+			font-size: 18px;
 		}
 
 		p:nth-child(2) {
 			color: rgba(0, 0, 0, 0.54);
-			font-size: 11px;
+			font-size: 13px;
 
 			span {
 				text-transform: uppercase;

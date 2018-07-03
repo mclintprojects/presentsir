@@ -16,7 +16,7 @@
 				</div>
 				<el-dialog title="Unenroll from course" :visible.sync="isConfirmingUnenroll">
 					<p>Are you sure you want to unenroll from this course?</p>
-					<span scope="footer" class="dialog-footer">
+					<span slot="footer">
 						<el-button @click="unenrollFromCourse" type="danger" round>Unenroll</el-button>
 					</span>
 				</el-dialog>
@@ -70,7 +70,7 @@ export default {
 		},
 		async enrollUser(id) {
 			try {
-				const response = await axios.post(`/enrollment?courseId=${id}`);
+				const response = await axios.post(`/enrollment`, { courseId: id });
 				if (response.status === 201) {
 					this.$message({
 						message: 'Successfully enrolled in course.',
