@@ -10,4 +10,8 @@ class CourseSerializer < ActiveModel::Serializer
     def teacher_name
         "#{object.teacher.user.last_name} #{object.teacher.user.first_name}"
     end
+
+    class SimpleCourseSerializer < ActiveModel::Serializer
+        attributes :id, :name, :identifier, :course_code, :is_logging_attendance
+    end
 end

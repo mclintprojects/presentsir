@@ -23,4 +23,14 @@ class CourseRepController < ApplicationController
             render json: {}, status: 403
         end
     end
+
+    def whoami
+        is_course_rep = CourseRep.find_by(student_id: session[:student_id]).present?
+        render json: {is_course_rep: is_course_rep}, status: 200
+    end
+
+    def courses
+        courses = Course.where('id in (?)', CourseRep.where(student_id: session[:student_id]).pluck(:course_id).to_a)
+        render json: courses, each_serializer: CourseSerializer::SimpleCourseSerializer, status: 200
+    end
 end

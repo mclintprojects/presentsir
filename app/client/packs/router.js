@@ -7,6 +7,7 @@ import Auth from './views/Auth.vue';
 import StudentHome from './views/student/Home';
 import StudentCourses from './views/student/Courses';
 import LogAttendance from './views/student/LogAttendance';
+import CourseRep from './views/student/CourseRep';
 
 import TeacherHome from './views/teacher/Home';
 import TeacherDashboard from './views/teacher/Dashboard';
@@ -37,6 +38,11 @@ const router = new Router({
 					path: 'log-attendance',
 					name: 'log-attendance',
 					component: LogAttendance
+				},
+				{
+					path: 'course_rep',
+					name: 'student-course-rep',
+					component: CourseRep
 				}
 			],
 			async beforeEnter(to, from, next) {

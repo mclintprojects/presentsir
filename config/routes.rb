@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
   post 'course_rep', to: 'course_rep#new'
   delete 'course_rep', to: 'course_rep#delete'
+  get 'course_rep/whoami'
+  get 'course_rep/courses'
 
   match "*path", to: "home#index", format: false, via: :get
 end

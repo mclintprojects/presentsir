@@ -9,6 +9,10 @@
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" />
                 <p>Courses</p>
             </div>
+			<div v-if="is_course_rep" @click="navigateTo('student-course-rep')" class="main-menu-item" :class="{highlight: shouldHighlight('student-course-rep')}">
+                <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530649206/present-sir/twotone-supervisor_account-24px.svg" />
+                <p>Course rep</p>
+            </div>
             <div class="main-menu-item" @click="logoutUser">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530450965/present-sir/twotone-exit_to_app-24px.svg" />
                 <p>Logout</p>
@@ -25,14 +29,20 @@
 <script>
 import Navbar from '../../components/Navbar';
 import eventbus from '../../eventbus';
+import axios from 'axios';
 
-const TOP_LEVEL_ROUTES = ['log-attendance', 'student-courses'];
+const TOP_LEVEL_ROUTES = [
+	'log-attendance',
+	'student-courses',
+	'student-course-rep'
+];
 export default {
 	components: { Navbar },
 	data() {
 		return {
 			collapsed: true,
-			selectedComponent: 'log-attendance'
+			selectedComponent: 'log-attendance',
+			is_course_rep: false
 		};
 	},
 	computed: {},
@@ -52,6 +62,11 @@ export default {
 			TOP_LEVEL_ROUTES.forEach(route => {
 				if (to.name == route) this.selectedComponent = route;
 			});
+		},
+		async unlockIfCourseRep() {
+			const response = await axios.get('/course_rep/whoami');
+			if (response.status === 200)
+				this.is_course_rep = response.data.is_course_rep;
 		}
 	},
 	watch: {
@@ -69,6 +84,11 @@ export default {
 			'navigatedToChildRoute',
 			component => (this.selectedComponent = component)
 		);
+
+		this.unlockIfCourseRep();
+	},
+	deactivated() {
+		this.is_course_rep = false;
 	}
 };
 </script>
