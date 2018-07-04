@@ -115,7 +115,7 @@ export default {
 			this.enrollmentId = enrollmentId;
 		}
 	},
-	activated() {
+	created() {
 		this.getEnrollments();
 	}
 };

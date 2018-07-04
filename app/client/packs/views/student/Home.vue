@@ -22,9 +22,7 @@
             </div>
         </navbar>
         <div>
-            <keep-alive>
-                <router-view></router-view>
-            </keep-alive>
+			<router-view></router-view>
         </div>
     </div>
 </template>
@@ -95,9 +93,6 @@ export default {
 		);
 
 		this.unlockIfCourseRep();
-	},
-	deactivated() {
-		this.is_course_rep = false;
 	}
 };
 </script>

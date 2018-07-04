@@ -100,7 +100,7 @@ export default {
 			done();
 		}
 	},
-	activated() {
+	created() {
 		this.$store.dispatch('getCourses');
 	}
 };

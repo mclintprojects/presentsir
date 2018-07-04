@@ -33,7 +33,7 @@ export default {
 			});
 		}
 	},
-	activated() {
+	created() {
 		this.getCourses();
 	}
 };

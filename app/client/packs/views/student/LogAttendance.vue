@@ -57,7 +57,7 @@ export default {
 			}
 		}
 	},
-	activated() {
+	created() {
 		this.getLoggingEnrollments();
 	}
 };

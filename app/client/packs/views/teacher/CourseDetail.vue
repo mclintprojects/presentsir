@@ -117,29 +117,33 @@ export default {
 			this.enrollments = response.data;
 		},
 		async markAttendance(state) {
-			this.isChangingAttendanceState = true;
-			const response = await axios.post(`/course/mark_attendance`, {
-				id: this.course.id,
-				state: state
-			});
-
-			if (response.status === 200) {
-				this.course.is_logging_attendance = state;
-				const message = state
-					? 'Students enrolled in this course can now mark themselves as present.'
-					: 'Attendance marking session ended.';
-
-				this.$message({
-					message,
-					type: 'success'
+			try {
+				this.isChangingAttendanceState = true;
+				const response = await axios.post(`/course/mark_attendance`, {
+					id: this.course.id,
+					state: state
 				});
 
-				if (state) {
-					this.activeTab = 'attendance-session';
-					this.getAttendances();
+				if (response.status === 200) {
+					this.course.is_logging_attendance = state;
+					const message = state
+						? 'Students enrolled in this course can now mark themselves as present.'
+						: 'Attendance marking session ended.';
+
+					this.$message({
+						message,
+						type: 'success'
+					});
+
+					if (state) {
+						this.activeTab = 'attendance-session';
+						this.getAttendances();
+					}
 				}
+				this.isChangingAttendanceState = false;
+			} catch (err) {
+				this.isChangingAttendanceState = false;
 			}
-			this.isChangingAttendanceState = false;
 		},
 		async getAttendances() {
 			const response = await axios.get(
@@ -220,7 +224,7 @@ export default {
 			}
 		}
 	},
-	async activated() {
+	async created() {
 		eventbus.$emit('navigatedToChildRoute', 'teacher-courses');
 
 		const id = this.$route.params.id;
@@ -235,14 +239,8 @@ export default {
 		this.getEnrollments();
 		this.subscribe();
 	},
-	deactivated() {
+	destroyed() {
 		this.$pusher.unsubscribe('present-sir');
-		this.course = { course_reps: [] };
-		this.activeTab = 'enrollments';
-		this.enrollments = [];
-		this.attendances = [];
-		this.isChangingAttendanceState = false;
-		this.isDeletingCourse = false;
 	}
 };
 </script>

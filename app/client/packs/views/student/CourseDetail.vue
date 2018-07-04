@@ -108,7 +108,7 @@ export default {
 			);
 		}
 	},
-	async activated() {
+	async created() {
 		eventbus.$emit('navigatedToChildRoute', 'student-course-rep');
 
 		const id = this.$route.params.id;
@@ -122,10 +122,8 @@ export default {
 		this.subscribe();
 		this.getAttendances();
 	},
-	deactivated() {
+	destroyed() {
 		this.$pusher.unsubscribe('present-sir');
-		this.course = { course_reps: [] };
-		this.attendances = [];
 	}
 };
 </script>

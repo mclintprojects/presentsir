@@ -93,7 +93,7 @@ export default {
 			} catch (err) {}
 		}
 	},
-	activated() {
+	created() {
 		this.date = eventbus.getDate();
 		this.getStats();
 	}
