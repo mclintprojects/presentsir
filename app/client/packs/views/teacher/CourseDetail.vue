@@ -241,6 +241,8 @@ export default {
 		this.activeTab = 'enrollments';
 		this.enrollments = [];
 		this.attendances = [];
+		this.isChangingAttendanceState = false;
+		this.isDeletingCourse = false;
 	}
 };
 </script>
