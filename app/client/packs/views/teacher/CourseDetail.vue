@@ -31,7 +31,7 @@
             </el-tab-pane>
             <el-tab-pane label="Course reps" name="course-reps">
 				<el-input v-model="courseRepEmail" placeholder="Enter a course rep's email">
-					<el-button slot="append" @click="addCourseRep">Add as course rep</el-button>
+					<el-button slot="append" @click="addCourseRep">Assign</el-button>
 				</el-input>
 				<div v-if="course.course_reps.length === 0" style="min-height: 60vh;" class="flex center-vertical center-horizontal">
 					<empty-state
@@ -198,6 +198,9 @@ export default {
 	},
 	deactivated() {
 		this.$pusher.unsubscribe('present-sir');
+		this.course = { course_reps: [] };
+		this.activeTab = 'enrollments';
+		this.enrollments = [];
 	}
 };
 </script>
