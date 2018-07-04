@@ -142,9 +142,7 @@ export default {
 				}
 				this.isChangingAttendanceState = false;
 			} catch (err) {
-				this.$message.error(
-					'Something went wrong while starting the attendance marking session.'
-				);
+				this.$message.error('Something went wrong.');
 				this.isChangingAttendanceState = false;
 			}
 		},
