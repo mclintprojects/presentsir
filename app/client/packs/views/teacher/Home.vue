@@ -61,6 +61,9 @@ export default {
 	watch: {
 		$route(to, from) {
 			this.highlight(to);
+
+			if (to.path === '/teacher')
+				this.$router.push({ name: 'teacher-dashboard' });
 		}
 	},
 	created() {

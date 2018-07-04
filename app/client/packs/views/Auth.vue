@@ -1,15 +1,15 @@
 <template>
-  <div id="auth-container">
+  <div id="auth-container" class="shadow">
     <div id="app-logo-container">
-      <img id="app-logo" src="" />
+      <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530701180/present-sir/mortarboard.svg" />
     </div>
 
     <p style="margin-top: 24px;" class="msg-title">Welcome to <span>Present, Sir</span></p>
     <p class="msg-subtitle">Class attendance logging made easy.</p>
 
     <el-row id="auth-buttons-container">
-      <el-button type="info" round @click="resumeSessionOrLogin">Login</el-button>
-      <el-button type="info" round @click="showSignupDialog = true">Signup</el-button>
+      <el-button round @click="resumeSessionOrLogin">Login</el-button>
+      <el-button round @click="showSignupDialog = true">Signup</el-button>
     </el-row>
 
 	<el-dialog title="Login" :visible.sync="showLoginDialog" :before-close="dialogClose">
@@ -155,19 +155,28 @@ export default {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	background: linear-gradient(97deg, #fe0040 50%, #323a4b 0%);
 }
 
 #app-logo-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	background: hsl(221, 20%, 32%);
 	width: 150px;
 	height: 150px;
-	background-color: white;
-	border-radius: 50%;
-	box-shadow: 0px 4px 4px 0px rgba(199, 199, 199, 0.3);
+
+	img {
+		width: 96px;
+		height: 96px;
+	}
 }
 
 .msg-title {
 	font-size: 24px;
-	color: var(--primary-text-color);
+	color: rgba(255, 255, 255, 0.8);
 	text-align: center;
 
 	span {
@@ -176,7 +185,7 @@ export default {
 }
 
 .msg-subtitle {
-	color: var(--primary-text-color-light);
+	color: rgba(255, 255, 255, 0.54);
 	text-align: center;
 }
 

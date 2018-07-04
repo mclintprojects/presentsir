@@ -79,6 +79,8 @@ export default {
 	watch: {
 		$route(to, from) {
 			this.highlight(to);
+
+			if (to.path === '/student') this.$router.push({ name: 'log-attendance' });
 		}
 	},
 	created() {
