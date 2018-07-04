@@ -5,7 +5,7 @@ class AttendanceController < ApplicationController
       attendance = Attendance.new(course_id: course.id, student_id: session[:student_id])
       if(attendance.save)
         render json: attendance, serializer: AttendanceSerializer, status: 201
-        Pusher.trigger('present-sir', 'course-attend', {course_id: course.id,
+        Pusher.trigger(pusher_channel_name, 'course-attend', {course_id: course.id,
         attendance: AttendanceSerializer.new(attendance)}.as_json)
       else
         render json: {errors: attendance.errors.full_messages}, status: 422

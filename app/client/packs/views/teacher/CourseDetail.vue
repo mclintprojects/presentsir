@@ -93,6 +93,11 @@ export default {
 			attendances: []
 		};
 	},
+	computed: {
+		channel_name() {
+			return `present-sir-${this.$store.getters.user.id}`;
+		}
+	},
 	methods: {
 		async deleteCourse() {
 			try {
@@ -156,12 +161,14 @@ export default {
 			if (response.status === 200) this.attendances = response.data;
 		},
 		subscribe() {
-			const channel = this.$pusher.subscribe('present-sir');
+			const channel = this.$pusher.subscribe(this.channel_name);
 			channel.bind(
 				'mark_attendance',
 				function(data) {
-					if (data.id === this.course.id)
+					if (data.id === this.course.id) {
 						this.course.is_logging_attendance = data.state;
+						this.activeTab = 'attendance-session';
+					}
 				}.bind(this)
 			);
 
@@ -241,7 +248,7 @@ export default {
 		this.subscribe();
 	},
 	destroyed() {
-		this.$pusher.unsubscribe('present-sir');
+		this.$pusher.unsubscribe(this.channel_name);
 	}
 };
 </script>

@@ -68,6 +68,7 @@ export default {
 		this.highlight(this.$route);
 		if (this.$route.path === '/teacher')
 			this.$router.push({ name: 'teacher-dashboard' });
+
 		this.$store.dispatch('setUser');
 
 		eventbus.$on(

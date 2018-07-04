@@ -39,7 +39,7 @@ class CourseController < ApplicationController
       course.update_attributes(is_logging_attendance: params[:state])
       render json: {}, status: 200
 
-      Pusher.trigger('present-sir', 'mark_attendance', {state: course.is_logging_attendance, id: course.id}.as_json)
+      Pusher.trigger(pusher_channel_name, 'mark_attendance', {state: course.is_logging_attendance, id: course.id}.as_json)
     else
       render json: {}, status: 403
     end

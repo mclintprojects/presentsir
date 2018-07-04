@@ -1,16 +1,19 @@
 import axios from 'axios';
 
 const state = {
-	user: {}
+	user: {},
+	isLoading: false
 };
 
 const getters = {
-	user: state => state.user
+	user: state => state.user,
+	isLoading: state => state.isLoading
 };
 
 const mutations = {
 	setUser: (state, user) => (state.user = user),
-	logout: state => (state.user = {})
+	logout: state => (state.user = {}),
+	isLoading: (state, isLoading) => (state.isLoading = isLoading)
 };
 
 const actions = {
@@ -21,7 +24,8 @@ const actions = {
 	logout: async ({ commit }) => {
 		const response = await axios.post('/auth/logout');
 		commit('logout');
-	}
+	},
+	setLoading: ({ commit }, isLoading) => commit('isLoading', isLoading)
 };
 
 export default {

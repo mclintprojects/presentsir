@@ -1,8 +1,20 @@
 <template>
   <div id="app">
+	<div class="loading-circle"><i class="el-icon-loading"></i></div>
     <router-view></router-view>
   </div>
 </template>
+
+<script>
+export default {
+	computed: {
+		isLoading() {
+			return this.$store.getters.isLoading;
+		}
+	}
+};
+</script>
+
 
 <style lang="scss">
 :root {
@@ -34,6 +46,24 @@ body {
 
 .container-full {
 	min-height: 100vh;
+}
+
+.loading-circle {
+	position: absolute;
+	top: calc(50% - 32px);
+	left: calc(50% - 32px);
+	border-radius: 50%;
+	background: #a7b1c3;
+	width: 36px;
+	height: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9000;
+
+	i {
+		color: white;
+	}
 }
 
 .flex {

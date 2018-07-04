@@ -50,6 +50,11 @@ export default {
 			attendances: []
 		};
 	},
+	computed: {
+		channel_name() {
+			return `present-sir-${this.$store.getters.user.id}`;
+		}
+	},
 	methods: {
 		getDateString(date) {
 			return eventbus.getDate(date);
@@ -89,7 +94,7 @@ export default {
 			if (response.status === 200) this.attendances = response.data;
 		},
 		subscribe() {
-			const channel = this.$pusher.subscribe('present-sir');
+			const channel = this.$pusher.subscribe(this.channel_name);
 			channel.bind(
 				'mark_attendance',
 				function(data) {
@@ -123,7 +128,7 @@ export default {
 		this.getAttendances();
 	},
 	destroyed() {
-		this.$pusher.unsubscribe('present-sir');
+		this.$pusher.unsubscribe(this.channel_name);
 	}
 };
 </script>
