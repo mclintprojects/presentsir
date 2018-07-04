@@ -89,6 +89,7 @@ export default {
 			}
 		},
 		cellClicked(id) {
+			this.$store.dispatch('isLoading', true);
 			this.$router.push({ name: 'course-detail', params: { id } });
 		},
 		currentPageChanged(page) {

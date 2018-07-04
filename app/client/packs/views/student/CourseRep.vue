@@ -23,10 +23,16 @@ export default {
 	},
 	methods: {
 		async getCourses() {
+			this.$store.dispatch('isLoading', true);
+
 			const response = await axios.get('/course_rep/courses');
 			if (response.status === 200) this.courses = response.data;
+
+			this.$store.dispatch('isLoading', false);
 		},
 		cellClicked(id, course) {
+			this.$store.dispatch('isLoading', true);
+
 			this.$router.push({
 				name: 'course-rep-course-detail',
 				params: { id, course }

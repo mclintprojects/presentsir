@@ -126,6 +126,7 @@ export default {
 
 		this.subscribe();
 		this.getAttendances();
+		this.$store.dispatch('isLoading', false);
 	},
 	destroyed() {
 		this.$pusher.unsubscribe(this.channel_name);

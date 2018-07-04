@@ -22,8 +22,10 @@ const mutations = {
 const actions = {
 	getCourses: async ({ commit }, page = 1) => {
 		try {
+			commit('isLoading', true);
 			const response = await axios.get(`/course/all?pageNumber=${page}`);
 			commit('setCourseData', response.data);
+			commit('isLoading', false);
 		} catch (err) {}
 	},
 	addCourse: ({ commit }, course) => commit('addCourse', course)

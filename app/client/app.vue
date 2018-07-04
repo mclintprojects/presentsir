@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-	<div class="loading-circle"><i class="el-icon-loading"></i></div>
+	<div v-if="isLoading" class="loading-circle"><i class="el-icon-loading"></i></div>
     <router-view></router-view>
   </div>
 </template>
@@ -50,8 +50,8 @@ body {
 
 .loading-circle {
 	position: absolute;
-	top: calc(50% - 32px);
-	left: calc(50% - 32px);
+	top: calc(50% - 18px);
+	left: calc(50% - 18px);
 	border-radius: 50%;
 	background: #a7b1c3;
 	width: 36px;

@@ -55,6 +55,7 @@ export default {
 	methods: {
 		async findCourse() {
 			try {
+				this.$store.dispatch('isLoading', true);
 				this.isEnrollingUser = true;
 				const response = await axios.get(
 					`/course/search?identifier=${this.enrollQuery}`
@@ -66,6 +67,7 @@ export default {
 					`Could not find a course with identifier '${this.enrollQuery}'.`
 				);
 				this.isEnrollingUser = false;
+				this.$store.dispatch('isLoading', false);
 			}
 		},
 		async enrollUser(id) {
@@ -89,6 +91,7 @@ export default {
 		async getEnrollments() {
 			const response = await axios.get('/enrollment/student/all');
 			this.enrollments = response.data;
+			this.$store.dispatch('isLoading', false);
 		},
 		async unenrollFromCourse() {
 			try {

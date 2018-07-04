@@ -246,6 +246,7 @@ export default {
 
 		this.getEnrollments();
 		this.subscribe();
+		this.$store.dispatch('isLoading', false);
 	},
 	destroyed() {
 		this.$pusher.unsubscribe(this.channel_name);

@@ -25,7 +25,7 @@ const actions = {
 		const response = await axios.post('/auth/logout');
 		commit('logout');
 	},
-	setLoading: ({ commit }, isLoading) => commit('isLoading', isLoading)
+	isLoading: ({ commit }, isLoading) => commit('isLoading', isLoading)
 };
 
 export default {

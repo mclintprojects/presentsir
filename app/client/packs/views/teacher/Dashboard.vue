@@ -46,7 +46,7 @@
 			<div v-if="courses.length > 0" style="margin-top: 24px;">
 				<p style="font-size: 13px; color: rgba(0, 0, 0, 0.54)">Enrollments in your courses</p>
 				<ul class="courses-list" style="margin-top: 8px">
-					<li class="flex dashboard-course" v-for="(course, index) in courses" :key="index" @click="cellClicked(course.id)">
+					<li class="flex dashboard-course" v-for="(course, index) in courses" :key="index">
 						<div>
 							<p>{{course.name}}</p>
 							<p>{{course.course_code}} <span :class="{hidden:!course.course_code}">|</span> Identifier: <span>{{course.identifier}}</span></p>
@@ -85,10 +85,12 @@ export default {
 	methods: {
 		async getStats() {
 			try {
+				this.$store.dispatch('isLoading', true);
 				const response = await axios.get('/dashboard/stats');
 				if (response.status === 200) {
 					this.stats = response.data.stats;
 					this.courses = response.data.courses;
+					this.$store.dispatch('isLoading', false);
 				}
 			} catch (err) {}
 		}
@@ -163,6 +165,11 @@ $primary-text-color-light: rgba(0, 0, 0, 0.54);
 .dashboard-course {
 	justify-content: space-between;
 	align-items: center;
+
+	&:hover {
+		cursor: default !important;
+		background: white !important;
+	}
 }
 
 .dashboard-course > p {
