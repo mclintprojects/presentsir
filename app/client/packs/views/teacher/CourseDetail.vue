@@ -167,7 +167,7 @@ export default {
 				function(data) {
 					if (data.id === this.course.id) {
 						this.course.is_logging_attendance = data.state;
-						this.activeTab = 'attendance-session';
+						this.activeTab = this.state ? 'attendance-session' : 'enrollments';
 					}
 				}.bind(this)
 			);
