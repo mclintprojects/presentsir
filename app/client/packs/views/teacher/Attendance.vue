@@ -59,12 +59,19 @@ export default {
 	},
 	methods: {
 		async getAttendances() {
-			this.isGettingAttendances = true;
-			const response = await axios.get(
-				`/attendance?date=${this.date}&identifier=${this.identifier}`
-			);
-			this.attendances = response.data;
-			this.isGettingAttendances = false;
+			try {
+				this.isGettingAttendances = true;
+				const response = await axios.get(
+					`/attendance?date=${this.date}&identifier=${this.identifier}`
+				);
+				this.attendances = response.data;
+				this.isGettingAttendances = false;
+			} catch (err) {
+				this.$message.error(
+					'Could not find anything matching those parameters.'
+				);
+				this.isGettingAttendances = false;
+			}
 		},
 		getDateString() {
 			return eventbus.getDate(this.date);
