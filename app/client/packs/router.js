@@ -8,6 +8,7 @@ import StudentHome from './views/student/Home';
 import StudentCourses from './views/student/Courses';
 import LogAttendance from './views/student/LogAttendance';
 import CourseRep from './views/student/CourseRep';
+import CourseRepCourseDetail from './views/student/CourseDetail';
 
 import TeacherHome from './views/teacher/Home';
 import TeacherDashboard from './views/teacher/Dashboard';
@@ -43,6 +44,11 @@ const router = new Router({
 					path: 'course_rep',
 					name: 'student-course-rep',
 					component: CourseRep
+				},
+				{
+					path: 'course_rep/course/:id',
+					name: 'course-rep-course-detail',
+					component: CourseRepCourseDetail
 				}
 			],
 			async beforeEnter(to, from, next) {

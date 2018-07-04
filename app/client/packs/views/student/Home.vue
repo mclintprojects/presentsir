@@ -1,6 +1,9 @@
 <template>
     <div>
         <navbar>
+			<div slot="greeting">
+				<p class="nav-greeting">Welcome back, {{user_name}}!</p>
+			</div>
             <div @click="navigateTo('log-attendance')" class="main-menu-item" :class="{highlight: shouldHighlight('log-attendance')}">
                 <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445880/present-sir/twotone-assignment-24px.svg" />
                 <p>Log attendance</p>
@@ -45,7 +48,11 @@ export default {
 			is_course_rep: false
 		};
 	},
-	computed: {},
+	computed: {
+		user_name() {
+			return this.$store.getters.user.first_name;
+		}
+	},
 	methods: {
 		shouldHighlight(name) {
 			return name === this.selectedComponent;

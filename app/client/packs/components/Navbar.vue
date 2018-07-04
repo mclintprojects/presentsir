@@ -3,20 +3,26 @@
         <div id="nav-bar" class="flex center-vertical">
             <p>Present, Sir</p>
             <div class="flex center-vertical">
-                <el-badge is-dot>
+                <el-badge is-dot v-if="showNotif">
                     <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530450965/present-sir/twotone-notifications-24px.svg" />
                 </el-badge>
                 <img @click="collapsed = !collapsed" id="main-menu-toggle" style="margin-left: 32px;" src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530446060/present-sir/twotone-menu-24px.svg" />
             </div>
         </div>
         <div :class="{hidden: collapsed}">
-            <div id="main-menu"><slot></slot></div>
+            <div id="main-menu">
+				<div id="greeting-slot">
+					<slot name="greeting"></slot>
+				</div>
+				<slot></slot>
+			</div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+	props: { showNotif: { type: Boolean, default: false } },
 	data() {
 		return {
 			collapsed: false
@@ -62,6 +68,13 @@ export default {
 	}
 }
 
+.nav-greeting {
+	color: rgba(0, 0, 0, 0.54);
+	font-size: 13px;
+	margin-right: 16px;
+	padding: 16px;
+}
+
 .main-menu-item {
 	padding: 16px;
 	display: flex;
@@ -98,6 +111,15 @@ export default {
 		justify-content: flex-start;
 
 		img {
+			margin-left: 16px;
+		}
+	}
+
+	#greeting-slot {
+		width: 100%;
+		text-align: left;
+
+		p {
 			margin-left: 16px;
 		}
 	}
