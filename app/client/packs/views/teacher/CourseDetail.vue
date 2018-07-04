@@ -22,7 +22,7 @@
             <el-tab-pane label="Enrollments" name="enrollments">
                 <p id="course-enrollments-count"><span>{{course.enrollments}}</span> 
 				{{course.enrollments === 1 ? 'student' : 'students'}} {{course.enrollments === 1 ? 'has' : 'have'}} enrolled in this course.</p>
-				<ul id="course-enrollments-list">
+				<ul class="two-title-list">
 					<li v-for="(enrollment, index) in enrollments" :key="index">
 						<p>{{enrollment.student.name}}</p>
 						<p>Enrolled on: {{getDateString(enrollment.created_at)}}</p>
@@ -33,12 +33,12 @@
 				<el-input v-model="courseRepEmail" placeholder="Enter a course rep's email">
 					<el-button slot="append" @click="addCourseRep">Assign</el-button>
 				</el-input>
-				<div v-if="course.course_reps.length === 0" style="min-height: 60vh;" class="flex center-vertical center-horizontal">
+				<div v-if="course.course_reps.length === 0" style="min-height: 40vh;" class="flex center-vertical center-horizontal">
 					<empty-state
 						src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530649206/present-sir/twotone-supervisor_account-24px.svg"
 						title="Course reps" subtitle="You have not assigned any course rep to this course yet." />
 				</div>
-				<ul id="course-reps-list">
+				<ul class="two-title-list">
 					<li class="flex center-vertical" v-for="(rep, index) in course.course_reps" :key="index">
 						<div>
 							<p>{{rep.student.name}}</p>
@@ -48,6 +48,21 @@
 					</li>
 				</ul>
             </el-tab-pane>
+			<el-tab-pane v-if="course.is_logging_attendance" label="Ongoing attendance marking session" name="attendance-session">
+				<div v-if="attendances.length === 0" style="min-height: 40vh;" class="flex center-vertical center-horizontal">
+					<empty-state
+						src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445880/present-sir/twotone-school-24px.svg"
+						title="Course attendance" subtitle="No one has marked themself as present in this course yet." />
+				</div>
+				<ul class="two-title-list">
+					<li class="flex center-vertical" v-for="(attendance, index) in attendances" :key="index">
+						<div>
+							<p>{{attendance.student.name}}</p>
+							<p>{{attendance.student.email}}</p>
+						</div>
+					</li>
+				</ul>
+			</el-tab-pane>
         </el-tabs>
 		<el-dialog :visible.sync="showDeleteConfirmation">
 			<p>Are you sure you want to delete this course?</p>
@@ -74,7 +89,8 @@ export default {
 			isDeletingCourse: false,
 			enrollments: [],
 			isChangingAttendanceState: false,
-			courseRepEmail: ''
+			courseRepEmail: '',
+			attendances: []
 		};
 	},
 	methods: {
@@ -117,8 +133,22 @@ export default {
 					message,
 					type: 'success'
 				});
+
+				if (state) {
+					this.activeTab = 'attendance-session';
+					this.getAttendances();
+				}
 			}
 			this.isChangingAttendanceState = false;
+		},
+		async getAttendances() {
+			const response = await axios.get(
+				`/attendance?identifier=${
+					this.course.identifier
+				}&date=${new Date().toDateString()}`
+			);
+
+			if (response.status === 200) this.attendances = response.data;
 		},
 		subscribe() {
 			const channel = this.$pusher.subscribe('present-sir');
@@ -150,6 +180,15 @@ export default {
 
 						this.enrollments.splice(index, 1);
 						this.course.enrollments--;
+					}
+				}.bind(this)
+			);
+
+			channel.bind(
+				'course-attend',
+				function(data) {
+					if (data.course_id === this.course.id) {
+						this.attendances.push(data.attendance);
 					}
 				}.bind(this)
 			);
@@ -201,6 +240,7 @@ export default {
 		this.course = { course_reps: [] };
 		this.activeTab = 'enrollments';
 		this.enrollments = [];
+		this.attendances = [];
 	}
 };
 </script>
@@ -230,8 +270,7 @@ $text-color-light: rgba(0, 0, 0, 0.54);
 	}
 }
 
-#course-enrollments-list,
-#course-reps-list {
+.two-title-list {
 	li {
 		border-bottom: 1px solid rgb(212, 212, 212);
 		padding: 16px 0px;
