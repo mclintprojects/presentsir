@@ -107,38 +107,7 @@ export default {
 </script>
 
 <style lang="scss">
-.courses-list {
-	margin-top: 24px;
-	list-style-type: none;
-
-	li {
-		color: rgba(0, 0, 0, 0.54);
-		margin-bottom: 16px;
-		background: white;
-		padding: 16px;
-		border-radius: 5px;
-
-		&:hover {
-			cursor: pointer;
-			background-color: hsl(210, 29%, 83%);
-		}
-
-		p:nth-child(1) {
-			font-weight: bold;
-			color: rgba(0, 0, 0, 0.8);
-		}
-
-		p:nth-child(2) {
-			font-size: 13px;
-
-			span:nth-child(1) {
-				margin: 0px 8px;
-				color: rgb(212, 212, 212);
-			}
-		}
-	}
-}
-@media screen and (max-width: 567px) {
+@media only screen and (max-width: 567px) {
 	#add-class-btn {
 		margin-top: 16px;
 		float: right;

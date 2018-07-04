@@ -91,7 +91,7 @@ export default {
 	}
 }
 
-@media screen and (max-width: 567px) {
+@media only screen and (max-width: 567px) {
 	#logging-courses {
 		li {
 			margin-right: 0px;

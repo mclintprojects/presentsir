@@ -88,7 +88,7 @@ export default {
 	border-bottom: 2px solid #fe0040;
 }
 
-@media screen and (max-width: 567px) {
+@media only screen and (max-width: 567px) {
 	#main-menu {
 		flex-direction: column;
 	}

@@ -106,7 +106,41 @@ ul {
 	box-shadow: 0px 2px 6px 0px rgb(231, 231, 231);
 }
 
-@media screen and (max-width: 567px) {
+.courses-list {
+	margin-top: 24px;
+	list-style-type: none;
+
+	li {
+		color: rgba(0, 0, 0, 0.54);
+		margin-bottom: 16px;
+		background: white;
+		padding: 16px;
+		border-radius: 5px;
+
+		&:hover {
+			cursor: pointer;
+			background-color: hsl(210, 29%, 83%);
+		}
+
+		div {
+			p:nth-child(1) {
+				font-weight: bold;
+				color: rgba(0, 0, 0, 0.8);
+			}
+
+			p:nth-child(2) {
+				font-size: 13px;
+
+				span:nth-child(1) {
+					margin: 0px 8px;
+					color: rgb(212, 212, 212);
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 567px) {
 	.container {
 		width: 95%;
 	}

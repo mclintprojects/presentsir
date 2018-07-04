@@ -257,7 +257,7 @@ $text-color-light: rgba(0, 0, 0, 0.54);
 	justify-content: flex-end;
 }
 
-@media screen and (max-width: 567px) {
+@media only screen and (max-width: 567px) {
 	#course-detail-actions {
 		margin-top: 16px;
 		justify-content: flex-start;

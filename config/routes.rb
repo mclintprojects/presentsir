@@ -1,5 +1,6 @@
 
 Rails.application.routes.draw do
+  get 'dashboard/stats'
   root to: "home#index"
   
   post 'users/signup'
