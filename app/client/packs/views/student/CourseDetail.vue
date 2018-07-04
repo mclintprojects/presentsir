@@ -32,13 +32,6 @@
 				</ul>
 			</el-tab-pane>
         </el-tabs>
-		<el-dialog :visible.sync="showDeleteConfirmation">
-			<p>Are you sure you want to delete this course?</p>
-			<span slot="footer">
-				<el-button @click="showDeleteConfirmation = false" round>Cancel</el-button>
-				<el-button type="danger" @click="deleteCourse" :loading="isDeletingCourse" round>Delete</el-button>
-			</span>
-		</el-dialog>
     </div>
 </template>
 
@@ -127,6 +120,7 @@ export default {
 		}
 
 		this.subscribe();
+		this.getAttendances();
 	},
 	deactivated() {
 		this.$pusher.unsubscribe('present-sir');

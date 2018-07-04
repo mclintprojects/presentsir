@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'json'
 
 RSpec.describe AttendanceController, type: :controller do
 
@@ -24,15 +25,19 @@ RSpec.describe AttendanceController, type: :controller do
       get :new, params: {courseId: course.id}
       expect(response).to have_http_status(403)
     end
+  end
 
-    it "will not allow student to mark attendance twice in a day" do
+  describe "GET #search" do
+    it "will get all attendance on a particular day" do
       course = create(:logging_course)
+      teacher = create(:teacher)
       student = create(:student)
-      session[:student_id] = student.id
+      attendance = Attendance.create(course_id: course.id, student_id: student.id, created_at: Time.zone.now.beginning_of_day)
+      session[:teacher_id] = teacher.id
 
-      get :new, params: {courseId: course.id}
-      get :new, params: {courseId: course.id}
-      expect(response).to have_http_status(422)
+      get :search, params: {date: attendance.created_at, identifier: course.identifier}
+      expect(response).to have_http_status(200)
+      expect(JSON.parse(response.body)[0]["id"]).to eq(attendance.id)
     end
   end
 

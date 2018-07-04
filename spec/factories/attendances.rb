@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :attendance do
-    class_id 1
-    student_id 1
+    course
+    student
   end
 end

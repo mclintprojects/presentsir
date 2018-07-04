@@ -21,6 +21,6 @@ class DashboardController < ApplicationController
 
     courses = Course.where('teacher_id = ?', session[:teacher_id])
 
-    render json: { stats: data, courses: ActiveModel::SerializableResource.new(courses) }, status: 200
+    render json: { stats: data, courses: ActiveModelSerializers::SerializableResource.new(courses) }, status: 200
   end
 end

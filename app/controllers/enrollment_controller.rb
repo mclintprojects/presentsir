@@ -32,10 +32,14 @@ class EnrollmentController < ApplicationController
 
   def delete
     enrollment = Enrollment.find(params[:id])
-    data = {course_id: enrollment.course_id, enrollment_id: enrollment.id}
+    if(session[:student_id].present? && enrollment.student_id == session[:student_id])
+      data = {course_id: enrollment.course_id, enrollment_id: enrollment.id}
 
-    enrollment.destroy
-    render json: {}, status: 200
-    Pusher.trigger('present-sir', 'course-unenroll', data.as_json)
+      enrollment.destroy
+      render json: {}, status: 200
+      Pusher.trigger('present-sir', 'course-unenroll', data.as_json)
+    else
+      render json: {}, status: 403
+    end
   end
 end

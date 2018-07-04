@@ -38,7 +38,47 @@ RSpec.describe EnrollmentController, type: :controller do
 
       get :all_student
       expect(response).to have_http_status(200)
+      expect(JSON.parse(response.body)[0]["id"]).to eq(enrollment.id)
       expect(Enrollment.all.count).to eq(1)
+    end
+  end
+
+  describe "GET #all_course" do
+    it "will get all enrollments a course has" do
+      course = create(:course)
+      student = create(:student)
+      enrollment = Enrollment.create(course_id: course.id, student_id: student.id)
+
+      get :all_course, params: {courseId: course.id}
+      expect(response).to have_http_status(200)
+      expect(JSON.parse(response.body)[0]["id"]).to eq(enrollment.id)
+      expect(Enrollment.all.count).to eq(1)
+    end
+  end
+
+  describe "DELETE #delete" do
+    it "will delete an enrollment" do
+      course = create(:course)
+      student = create(:student)
+      enrollment = Enrollment.create(course_id: course.id, student_id: student.id)
+
+      session[:student_id] = student.id
+
+      before_count = Enrollment.all.count
+      delete :delete, params: {id: enrollment.id}
+      expect(response).to have_http_status(200)
+      expect(Enrollment.all.count).to eq(before_count - 1)
+    end
+
+    it "will not delete an enrollment if not logged in or didn't create enrollment" do
+      course = create(:course)
+      student = create(:student)
+      enrollment = Enrollment.create(course_id: course.id, student_id: student.id)
+
+      session[:student_id] = 0
+
+      delete :delete, params: {id: enrollment.id}
+      expect(response).to have_http_status(403)
     end
   end
 

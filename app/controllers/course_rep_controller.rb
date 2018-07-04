@@ -1,6 +1,6 @@
 class CourseRepController < ApplicationController
     def new
-        if(session[:teacher_id].present?)
+        if(session[:teacher_id].present? && Course.find(params[:courseId]).teacher_id == session[:teacher_id])
             student = Student.find_by(user_id: User.find_by(email: params[:email]))
             course_rep = CourseRep.new(student_id: student.id, course_id: params[:courseId])
 

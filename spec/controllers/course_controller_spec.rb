@@ -47,10 +47,40 @@ RSpec.describe CourseController, type: :controller do
     end
   end
 
-  describe "GET #update" do
-    it "returns http success" do
-      post :update
+  describe "POST #mark_attendance" do
+    let(:course){create(:course)}
+    let(:student){create(:student)}
+
+    it "will initiate attendance logging session as course teacher" do
+      session[:teacher_id] = course.teacher.id
+
+      post :mark_attendance, params: {id: course.id, state: true}
       expect(response).to have_http_status(200)
+      expect(Course.find(course.id).is_logging_attendance).to eq(true)
+    end
+
+    it "will initiate attendance logging session as assigned course rep" do
+      course_rep = CourseRep.create(student_id: student.id, course_id: course.id)
+      session[:student_id] = student.id
+
+      post :mark_attendance, params: {id: course.id, state: true}
+      expect(response).to have_http_status(200)
+      expect(Course.find(course.id).is_logging_attendance).to eq(true)
+    end
+
+    it "will reject attendance logging session if not course teacher or an assigned class rep" do
+      course_rep = CourseRep.create(student_id: student.id, course_id: course.id)
+      session[:student_id] = 0
+
+      post :mark_attendance, params: {id: course.id, state: true}
+      expect(response).to have_http_status(403)
+    end
+
+    it "will reject attendance logging session if not course teacher" do
+      session[:teacher_id] = 0
+
+      post :mark_attendance, params: {id: course.id, state: true}
+      expect(response).to have_http_status(403)
     end
   end
 

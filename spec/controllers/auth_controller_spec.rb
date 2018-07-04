@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AuthController, type: :controller do
     describe "GET #session" do
-        it "will return course that matches id" do
+        it "will return session data if logged in" do
             user = User.create(first_name: 'Test', last_name: 'Test', email: 'test@gmail.com', password: 'password', user_type: 'teacher')
             teacher = Teacher.create(user_id: user.id)
             @controller = UsersController.new
@@ -11,6 +11,12 @@ RSpec.describe AuthController, type: :controller do
             @controller = AuthController.new
             get :get_session
             expect(JSON.parse(response.body)["user"]["email"]).to eq('test@gmail.com')
+            expect(response).to have_http_status(200)
+        end
+
+        it "will return nil if not logged in" do
+            get :get_session
+            expect(JSON.parse(response.body)["user"]).to eq(nil)
             expect(response).to have_http_status(200)
         end
     end
