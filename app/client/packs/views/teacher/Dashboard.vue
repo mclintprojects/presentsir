@@ -44,7 +44,7 @@
 			</div>
 
 			<div v-if="courses.length > 0" style="margin-top: 24px;">
-				<p style="font-size: 13px; color: rgba(0, 0, 0, 0.54)">Course enrollments</p>
+				<p style="font-size: 13px; color: rgba(0, 0, 0, 0.54)">Enrollments in your courses</p>
 				<ul class="courses-list" style="margin-top: 8px">
 					<li class="flex dashboard-course" v-for="(course, index) in courses" :key="index" @click="cellClicked(course.id)">
 						<div>
