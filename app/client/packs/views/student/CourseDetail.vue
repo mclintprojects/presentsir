@@ -52,11 +52,6 @@ export default {
 			isApprovingAttendance: false
 		};
 	},
-	computed: {
-		channel_name() {
-			return `present-sir-${this.$store.getters.user.id}`;
-		}
-	},
 	methods: {
 		getDateString(date) {
 			return eventbus.getDate(date);
@@ -96,7 +91,7 @@ export default {
 			if (response.status === 200) this.attendances = response.data;
 		},
 		subscribe() {
-			const channel = this.$pusher.subscribe(this.channel_name);
+			const channel = this.$pusher.subscribe('present-sir');
 			channel.bind(
 				'mark_attendance',
 				function(data) {

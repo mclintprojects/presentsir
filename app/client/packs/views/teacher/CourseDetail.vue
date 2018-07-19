@@ -93,11 +93,6 @@ export default {
 			attendances: []
 		};
 	},
-	computed: {
-		channel_name() {
-			return `present-sir-${this.$store.getters.user.id}`;
-		}
-	},
 	methods: {
 		async deleteCourse() {
 			try {
@@ -161,7 +156,7 @@ export default {
 			if (response.status === 200) this.attendances = response.data;
 		},
 		subscribe() {
-			const channel = this.$pusher.subscribe(this.channel_name);
+			const channel = this.$pusher.subscribe('present-sir');
 			channel.bind(
 				'mark_attendance',
 				function(data) {
@@ -199,9 +194,8 @@ export default {
 			channel.bind(
 				'course-attend',
 				function(data) {
-					if (data.course_id === this.course.id) {
+					if (data.course_id === this.course.id)
 						this.attendances.push(data.attendance);
-					}
 				}.bind(this)
 			);
 		},

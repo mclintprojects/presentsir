@@ -20,8 +20,8 @@ class AttendanceController < ApplicationController
         date, date + 1.days, Course.find_by(identifier: params[:identifier]).id),
         each_serializer: AttendanceSerializer, status: 200
     else
-        render json: Attendance.where('created_at >= ? AND created_at <= ? AND course_id = ? AND approved = true',
-        date, date + 1.days, Course.find_by(identifier: params[:identifier]).id),
+        render json: Attendance.where('created_at >= ? AND created_at <= ? AND course_id = ? AND approved = ?',
+        date, date + 1.days, Course.find_by(identifier: params[:identifier]).id, true),
         each_serializer: AttendanceSerializer, status: 200
     end
   end
