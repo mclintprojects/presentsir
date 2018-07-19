@@ -5,8 +5,6 @@ class AttendanceController < ApplicationController
       attendance = Attendance.new(course_id: course.id, student_id: session[:student_id])
       if(attendance.save)
         render json: attendance, serializer: AttendanceSerializer, status: 201
-        Pusher.trigger(pusher_channel_name, 'course-attend', {course_id: course.id,
-        attendance: AttendanceSerializer.new(attendance)}.as_json)
       else
         render json: {errors: attendance.errors.full_messages}, status: 422
       end
@@ -28,12 +26,14 @@ class AttendanceController < ApplicationController
     end
   end
 
-  def approved
+  def approve
     if(session[:teacher_id].present? || session[:student_id])
-      enrollment = Enrollment.find(params[:id])
-      if(enrollment.present?)
-        enrollment.update_attributes(approved: params[:approved])
-        render json: enrollment, serializer: EnrollmentSerializer, status: 200
+      attendance = Attendance.find(params[:id])
+      if(attendance.present?)
+        attendance.update_attributes(approved: true)
+        render json: attendance, serializer: AttendanceSerializer, status: 200
+        Pusher.trigger(pusher_channel_name, 'course-attend', {course_id: attendance.course_id,
+        attendance: ActiveModelSerializers::SerializableResource.new(attendance).as_json})
       else
         render json: {}, status: 404
       end

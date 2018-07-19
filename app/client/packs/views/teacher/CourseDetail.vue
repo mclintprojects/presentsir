@@ -60,7 +60,6 @@
 							<p>{{attendance.student.name}}</p>
 							<p>{{attendance.student.email}}</p>
 						</div>
-						<el-button @click="approveAttendance(attendance.id, index)" v-if="!attendance.approved" type="success" size="small" round :disabled="isApprovingAttendance" :loading="isApprovingAttendance">Approve</el-button>
 					</li>
 				</ul>
 			</el-tab-pane>
@@ -91,8 +90,7 @@ export default {
 			enrollments: [],
 			isChangingAttendanceState: false,
 			courseRepEmail: '',
-			attendances: [],
-			isApprovingAttendance: false
+			attendances: []
 		};
 	},
 	computed: {
@@ -232,13 +230,6 @@ export default {
 					type: 'success'
 				});
 			}
-		},
-		async approveAttendance(id, index) {
-			this.isApprovingAttendance = true;
-			const response = await axios.post(`/attendance/approve?id=${id}`);
-
-			if (response.status === 200) this.attendances.$set(index, response.data);
-			this.isApprovingAttendance = false;
 		}
 	},
 	async created() {

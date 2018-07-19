@@ -108,17 +108,19 @@ export default {
 			channel.bind(
 				'course-attend',
 				function(data) {
-					if (data.course_id === this.course.id) {
+					const attendanceExists = this.attendances.find(e => e.id === data.id);
+					if (data.course_id === this.course.id && attendanceExists == false)
 						this.attendances.push(data.attendance);
-					}
 				}.bind(this)
 			);
 		},
 		async approveAttendance(id, index) {
 			this.isApprovingAttendance = true;
-			const response = await axios.post(`/attendance/approve?id=${id}`);
 
-			if (response.status === 200) this.attendances.$set(index, response.data);
+			const response = await axios.post(`/attendance/approve?id=${id}`);
+			if (response.status === 200)
+				this.$set(this.attendances, index, response.data);
+
 			this.isApprovingAttendance = false;
 		}
 	},
@@ -171,7 +173,7 @@ $text-color-light: rgba(0, 0, 0, 0.54);
 .two-title-list {
 	li {
 		border-bottom: 1px solid rgb(212, 212, 212);
-		padding-bottom: 16px;
+		padding: 16px 0px;
 		justify-content: space-between;
 
 		p:nth-child(1) {
