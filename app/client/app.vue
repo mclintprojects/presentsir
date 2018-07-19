@@ -170,6 +170,18 @@ ul {
 	}
 }
 
+$primary-text-color-light: rgba(0, 0, 0, 0.54);
+
+.dashboard-greeting {
+	font-size: 22px;
+}
+
+.dashboard-date {
+	color: $primary-text-color-light;
+	text-transform: uppercase;
+	font-size: 10px;
+}
+
 @media only screen and (max-width: 567px) {
 	.container {
 		width: 95%;

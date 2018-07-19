@@ -106,16 +106,6 @@ export default {
 $primary-text-color: rgba(0, 0, 0, 0.8);
 $primary-text-color-light: rgba(0, 0, 0, 0.54);
 
-.dashboard-greeting {
-	font-size: 22px;
-}
-
-.dashboard-date {
-	color: $primary-text-color-light;
-	text-transform: uppercase;
-	font-size: 10px;
-}
-
 #dashboard-container {
 	margin-top: 24px;
 }

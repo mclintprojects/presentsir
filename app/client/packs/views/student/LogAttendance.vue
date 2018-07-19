@@ -1,11 +1,14 @@
 <template>
     <div class="app-container">
+		<div>
+			<p class="dashboard-greeting">Welcome back {{username}}!</p>
+			<p class="dashboard-date">{{date}}</p>
+		</div>
         <div v-if="logging_enrollments.length === 0" style="min-height: 60vh;" class="flex center-vertical center-horizontal">
             <empty-state
                 src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445880/present-sir/twotone-assignment-24px.svg"
                 title="Courses logging attendance" subtitle="No course you are enrolled in is currently logging attendance." />
         </div>
-
         <div style="margin-bottom: 16px;" v-if="logging_enrollments.length > 0">
             <p style="color: rgba(0, 0, 0, 0.54); font-size: 10px; text-transform: uppercase;">Courses currently logging attendance</p>
             <ul id="logging-courses" class="flex">
@@ -25,6 +28,7 @@
 
 <script>
 import EmptyState from '../../components/EmptyState';
+import eventbus from '../../eventbus';
 import axios from 'axios';
 
 export default {
@@ -32,8 +36,14 @@ export default {
 	data() {
 		return {
 			logging_enrollments: [],
-			isMarkingAsPresent: false
+			isMarkingAsPresent: false,
+			date: ''
 		};
+	},
+	computed: {
+		username() {
+			return this.$store.getters.user.first_name;
+		}
 	},
 	methods: {
 		async getLoggingEnrollments() {
@@ -58,6 +68,7 @@ export default {
 		}
 	},
 	created() {
+		this.date = eventbus.getDate();
 		this.getLoggingEnrollments();
 	}
 };

@@ -11,9 +11,6 @@
         </div>
         <div :class="{hidden: collapsed}">
             <div id="main-menu">
-				<div id="greeting-slot">
-					<slot name="greeting"></slot>
-				</div>
 				<slot></slot>
 			</div>
         </div>
