@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   post 'attendance/new'
   get 'attendance', to: 'attendance#search'
+  post 'attendance/approve'
 
   post 'course_rep', to: 'course_rep#new'
   delete 'course_rep', to: 'course_rep#delete'

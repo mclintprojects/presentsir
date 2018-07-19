@@ -28,6 +28,7 @@
 							<p>{{attendance.student.name}}</p>
 							<p>{{attendance.student.email}}</p>
 						</div>
+						<el-button @click="approveEnrollment(attendance.id)" v-if="!attendance.approved" type="success" size="small" round :disabled="isApprovingAttendance" :loading="isApprovingAttendance">Approve</el-button>
 					</li>
 				</ul>
 			</el-tab-pane>
@@ -47,7 +48,8 @@ export default {
 			course: { course_reps: [] },
 			activeTab: 'attendance-session',
 			isChangingAttendanceState: false,
-			attendances: []
+			attendances: [],
+			isApprovingAttendance: false
 		};
 	},
 	computed: {
@@ -111,6 +113,15 @@ export default {
 					}
 				}.bind(this)
 			);
+		},
+		async approveEnrollment(enrollmentId, index) {
+			this.isApprovingAttendance = true;
+			const response = await axios.post(
+				`/enrollment/approve?id=${enrollmentId}`
+			);
+
+			if (response.status === 200) this.attendances.$set(index, response.data);
+			this.isApprovingAttendance = false;
 		}
 	},
 	async created() {
@@ -162,7 +173,7 @@ $text-color-light: rgba(0, 0, 0, 0.54);
 .two-title-list {
 	li {
 		border-bottom: 1px solid rgb(212, 212, 212);
-		padding: 16px 0px;
+		padding-bottom: 16px;
 		justify-content: space-between;
 
 		p:nth-child(1) {
