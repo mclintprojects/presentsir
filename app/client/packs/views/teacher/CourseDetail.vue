@@ -60,6 +60,7 @@
 							<p>{{attendance.student.name}}</p>
 							<p>{{attendance.student.email}}</p>
 						</div>
+						<el-button @click="approveAttendance(attendance.id, index)" v-if="!attendance.approved" type="success" size="small" round :disabled="isApprovingAttendance" :loading="isApprovingAttendance">Approve</el-button>
 					</li>
 				</ul>
 			</el-tab-pane>
@@ -90,7 +91,8 @@ export default {
 			enrollments: [],
 			isChangingAttendanceState: false,
 			courseRepEmail: '',
-			attendances: []
+			attendances: [],
+			isApprovingAttendance: false
 		};
 	},
 	computed: {
@@ -119,7 +121,7 @@ export default {
 			const response = await axios.get(
 				`/enrollment/course/all?courseId=${this.$route.params.id}`
 			);
-			this.enrollments = response.data;
+			if (response.status === 200) this.enrollments = response.data;
 		},
 		async markAttendance(state) {
 			try {
@@ -230,6 +232,13 @@ export default {
 					type: 'success'
 				});
 			}
+		},
+		async approveAttendance(id, index) {
+			this.isApprovingAttendance = true;
+			const response = await axios.post(`/attendance/approve?id=${id}`);
+
+			if (response.status === 200) this.attendances.$set(index, response.data);
+			this.isApprovingAttendance = false;
 		}
 	},
 	async created() {
@@ -245,6 +254,7 @@ export default {
 		}
 
 		this.getEnrollments();
+		this.getAttendances();
 		this.subscribe();
 		this.$store.dispatch('isLoading', false);
 	},

@@ -28,7 +28,7 @@
 							<p>{{attendance.student.name}}</p>
 							<p>{{attendance.student.email}}</p>
 						</div>
-						<el-button @click="approveEnrollment(attendance.id)" v-if="!attendance.approved" type="success" size="small" round :disabled="isApprovingAttendance" :loading="isApprovingAttendance">Approve</el-button>
+						<el-button @click="approveAttendance(attendance.id, index)" v-if="!attendance.approved" type="success" size="small" round :disabled="isApprovingAttendance" :loading="isApprovingAttendance">Approve</el-button>
 					</li>
 				</ul>
 			</el-tab-pane>
@@ -90,7 +90,7 @@ export default {
 			const response = await axios.get(
 				`/attendance?identifier=${
 					this.course.identifier
-				}&date=${new Date().toDateString()}`
+				}&date=${new Date().toDateString()}&is_course_rep=true`
 			);
 
 			if (response.status === 200) this.attendances = response.data;
@@ -114,11 +114,9 @@ export default {
 				}.bind(this)
 			);
 		},
-		async approveEnrollment(enrollmentId, index) {
+		async approveAttendance(id, index) {
 			this.isApprovingAttendance = true;
-			const response = await axios.post(
-				`/enrollment/approve?id=${enrollmentId}`
-			);
+			const response = await axios.post(`/attendance/approve?id=${id}`);
 
 			if (response.status === 200) this.attendances.$set(index, response.data);
 			this.isApprovingAttendance = false;
