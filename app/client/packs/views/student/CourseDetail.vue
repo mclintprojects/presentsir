@@ -85,7 +85,7 @@ export default {
 			const response = await axios.get(
 				`/attendance?identifier=${
 					this.course.identifier
-				}&date=${new Date().toDateString()}&is_course_rep=true`
+				}&date=${new Date().toDateString()}`
 			);
 
 			if (response.status === 200) this.attendances = response.data;

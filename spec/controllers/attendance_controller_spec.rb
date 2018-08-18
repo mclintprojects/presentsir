@@ -28,7 +28,7 @@ RSpec.describe AttendanceController, type: :controller do
   end
 
   describe "GET #search" do
-    it "will get all attendance on a particular day for teacher" do
+    it "will get all attendance on a particular day" do
       course = create(:logging_course)
       teacher = create(:teacher)
       student = create(:student)
@@ -36,16 +36,6 @@ RSpec.describe AttendanceController, type: :controller do
       session[:teacher_id] = teacher.id
 
       get :search, params: {date: attendance.created_at, identifier: course.identifier}
-      expect(response).to have_http_status(200)
-      expect(JSON.parse(response.body)[0]["id"]).to eq(attendance.id)
-    end
-
-    it "will get all attendance on a particular day for course rep" do
-      course = create(:logging_course)
-      student = create(:student)
-      attendance = Attendance.create(course_id: course.id, student_id: student.id, created_at: Time.zone.now.beginning_of_day, approved: true)
-
-      get :search, params: {date: attendance.created_at, identifier: course.identifier, is_course_rep: true}
       expect(response).to have_http_status(200)
       expect(JSON.parse(response.body)[0]["id"]).to eq(attendance.id)
     end
