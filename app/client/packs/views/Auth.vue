@@ -28,12 +28,12 @@
 					<p>Add courses that you teach. Assign a course rep. View course enrollments.</p>
 				</div>
 				<div class="feature">
-					<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
+					<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445880/present-sir/twotone-school-24px.svg" alt="courses-icon">
 					<p>Attendance statistics</p>
 					<p>View course attendance statistics for any day. Export data to CSV for use in alloting marks.</p>
 				</div>
 				<div class="feature">
-					<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
+					<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530599979/present-sir/twotone-check_circle-24px.svg" alt="courses-icon">
 					<p>Mark attendance</p>
 					<p>Start a real-time attendance marking session and allow students to mark themselves as present in your class.</p>
 				</div>
@@ -256,7 +256,6 @@ export default {
 
 		.feature {
 			width: 20%;
-			padding: 24px;
 			display: flex;
 			flex-direction: column;
 			text-align: center;
@@ -279,6 +278,57 @@ export default {
 			p:nth-child(3) {
 				font-size: 14px;
 				color: rgba(0, 0, 0, 0.54);
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 567px) {
+	.landing-section {
+		margin-top: 24px;
+		width: calc(100% - 48px);
+	}
+
+	#banner {
+		flex-direction: column-reverse;
+		flex-wrap: nowrap;
+		justify-content: center;
+		> div {
+			text-align: center;
+			width: 100%;
+			p:nth-child(1) {
+				font-size: 20px;
+			}
+
+			+ img {
+				width: 300px;
+				margin-bottom: 24px;
+			}
+		}
+	}
+
+	#features {
+		background: white;
+		padding: 30px;
+
+		h1 {
+			font-size: 16px;
+			margin-bottom: 16px;
+		}
+
+		#features-container {
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+
+			.feature {
+				width: 100%;
+				margin-right: 0px;
+
+				img {
+					width: 36px;
+					margin: auto;
+				}
 			}
 		}
 	}
