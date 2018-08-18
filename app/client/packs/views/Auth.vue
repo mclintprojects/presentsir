@@ -1,16 +1,42 @@
 <template>
   <div id="auth-container" class="shadow">
-    <div id="app-logo-container">
-      <img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530701180/present-sir/mortarboard.svg" />
-    </div>
+	<div id="auth-nav" class="flex center-vertical">
+		<p>Present, Sir</p>
+		<div>
+			<el-button round @click="showSignupDialog = true" size="small">Get started</el-button>
+			<el-button round @click="resumeSessionOrLogin" size="small" type="primary">Login</el-button>
+		</div>
+	</div>
 
-    <p style="margin-top: 24px;" class="msg-title">Welcome to <span>Present, Sir</span></p>
-    <p class="msg-subtitle">Class attendance logging made easy.</p>
+	<div>
+		<section id="banner" class="landing-section flex center-vertical">
+			<div>
+				<p>Everything you need to manage your class attendance</p>
+				<p>Present, Sir brings all the pieces together to make managing your class attendance <b>easy as ABC.</b></p>
 
-    <el-row id="auth-buttons-container">
-      <el-button round @click="resumeSessionOrLogin">Login</el-button>
-      <el-button round @click="showSignupDialog = true">Signup</el-button>
-    </el-row>
+				<el-button round @click="showSignupDialog = true" size="small" type="primary">Get started</el-button>
+			</div>
+			<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1534623555/present-sir/Screen_Shot_2018-08-18_at_19.59.17.png" alt="dashboard">
+		</section>
+
+		<section id="features">
+			<div class="feature">
+				<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
+				<p>Courses</p>
+				<p>Add courses that you teach. Assign a course rep. View course enrollments.</p>
+			</div>
+			<div class="feature">
+				<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
+				<p>Attendance</p>
+				<p>View course attendance statistics for any day. Export data to CSV for use in alloting marks.</p>
+			</div>
+			<div class="feature">
+				<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
+				<p>Log</p>
+				<p>Start a real-time attendance marking session and allow students to mark themselves as present in your class.</p>
+			</div>
+		</section>
+	</div>
 
 	<el-dialog title="Login" :visible.sync="showLoginDialog" :before-close="dialogClose">
 		<div class="auth-dialog">
@@ -150,27 +176,20 @@ export default {
 
 <style lang="scss">
 #auth-container {
-	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	background: linear-gradient(97deg, #fe0040 50%, #323a4b 0%);
+	background: #e9eef3;
 }
 
-#app-logo-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	border-radius: 50%;
-	background: hsl(221, 20%, 32%);
-	width: 150px;
-	height: 150px;
+#auth-nav {
+	justify-content: space-between;
+	background: white;
+	padding: 16px;
+	position: sticky;
 
-	img {
-		width: 96px;
-		height: 96px;
+	> p {
+		font-size: 16px;
+		font-weight: bold;
 	}
 }
 
@@ -189,7 +208,67 @@ export default {
 	text-align: center;
 }
 
-#auth-buttons-container {
-	margin-top: 40px;
+.landing-section {
+	width: 70%;
+	margin: auto;
+}
+
+#banner {
+	height: calc(100vh - 64px);
+	justify-content: space-between;
+	> div {
+		width: 30%;
+		p:nth-child(1) {
+			font-size: 30px;
+			font-weight: bold;
+			font-family: 'Alfa Slab One', Arial, Helvetica, sans-serif;
+			color: rgba(0, 0, 0, 0.8);
+			margin-bottom: 16px;
+
+			+ p {
+				font-size: 14px;
+				margin-bottom: 16px;
+				color: rgba(0, 0, 0, 0.54);
+			}
+		}
+
+		+ img {
+			width: 800px;
+			box-shadow: 0px 0px 10px 0px rgb(219, 219, 219);
+		}
+	}
+}
+
+#features {
+	display: flex;
+	justify-content: center;
+	background: white;
+
+	.feature {
+		width: 20%;
+		padding: 24px;
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		min-height: 200px;
+		margin-right: 32px;
+
+		img {
+			height: 48px;
+		}
+
+		p:nth-child(2) {
+			font-size: 18px;
+			color: rgba(0, 0, 0, 0.8);
+			font-weight: bold;
+			margin-bottom: 16px;
+			margin-top: 8px;
+		}
+
+		p:nth-child(3) {
+			font-size: 14px;
+			color: rgba(0, 0, 0, 0.54);
+		}
+	}
 }
 </style>
