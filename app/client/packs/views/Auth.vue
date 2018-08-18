@@ -14,26 +14,29 @@
 				<p>Everything you need to manage your class attendance</p>
 				<p>Present, Sir brings all the pieces together to make managing your class attendance <b>easy as ABC.</b></p>
 
-				<el-button round @click="showSignupDialog = true" size="small" type="primary">Get started</el-button>
+				<el-button round @click="showSignupDialog = true" size="small">Get started</el-button>
 			</div>
 			<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1534623555/present-sir/Screen_Shot_2018-08-18_at_19.59.17.png" alt="dashboard">
 		</section>
 
 		<section id="features">
-			<div class="feature">
-				<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
-				<p>Courses</p>
-				<p>Add courses that you teach. Assign a course rep. View course enrollments.</p>
-			</div>
-			<div class="feature">
-				<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
-				<p>Attendance</p>
-				<p>View course attendance statistics for any day. Export data to CSV for use in alloting marks.</p>
-			</div>
-			<div class="feature">
-				<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
-				<p>Log</p>
-				<p>Start a real-time attendance marking session and allow students to mark themselves as present in your class.</p>
+			<h1>Features</h1>
+			<div id="features-container">
+				<div class="feature">
+					<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
+					<p>Manage courses</p>
+					<p>Add courses that you teach. Assign a course rep. View course enrollments.</p>
+				</div>
+				<div class="feature">
+					<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
+					<p>Attendance statistics</p>
+					<p>View course attendance statistics for any day. Export data to CSV for use in alloting marks.</p>
+				</div>
+				<div class="feature">
+					<img src="https://res.cloudinary.com/mclint-cdn/image/upload/v1530445329/present-sir/twotone-class-24px.svg" alt="courses-icon">
+					<p>Mark attendance</p>
+					<p>Start a real-time attendance marking session and allow students to mark themselves as present in your class.</p>
+				</div>
 			</div>
 		</section>
 	</div>
@@ -219,7 +222,7 @@ export default {
 	> div {
 		width: 30%;
 		p:nth-child(1) {
-			font-size: 30px;
+			font-size: 40px;
 			font-weight: bold;
 			font-family: 'Alfa Slab One', Arial, Helvetica, sans-serif;
 			color: rgba(0, 0, 0, 0.8);
@@ -240,34 +243,43 @@ export default {
 }
 
 #features {
-	display: flex;
-	justify-content: center;
 	background: white;
+	padding: 30px;
 
-	.feature {
-		width: 20%;
-		padding: 24px;
+	h1 {
+		margin-bottom: 24px;
+	}
+
+	#features-container {
 		display: flex;
-		flex-direction: column;
-		text-align: center;
-		min-height: 200px;
-		margin-right: 32px;
+		justify-content: center;
 
-		img {
-			height: 48px;
-		}
+		.feature {
+			width: 20%;
+			padding: 24px;
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+			min-height: 200px;
+			margin-right: 32px;
 
-		p:nth-child(2) {
-			font-size: 18px;
-			color: rgba(0, 0, 0, 0.8);
-			font-weight: bold;
-			margin-bottom: 16px;
-			margin-top: 8px;
-		}
+			img {
+				height: 48px;
+			}
 
-		p:nth-child(3) {
-			font-size: 14px;
-			color: rgba(0, 0, 0, 0.54);
+			p:nth-child(2) {
+				font-size: 14px;
+				color: rgba(0, 0, 0, 0.8);
+				font-weight: bold;
+				margin-bottom: 16px;
+				margin-top: 8px;
+				text-transform: uppercase;
+			}
+
+			p:nth-child(3) {
+				font-size: 14px;
+				color: rgba(0, 0, 0, 0.54);
+			}
 		}
 	}
 }
